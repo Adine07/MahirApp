@@ -32,22 +32,22 @@ $clients = [
 ];
 
 $kas = [
-'title' => 'KAS',
+'title' => 'Cash',
 'url' => '',
 'icon' => 'dw dw-money-1',
 'model' => App\Models\Kas::class,
 'childerns' => [
 		[
-				'title' => 'List KAS',
-				'url' => '/kas',
+				'title' => 'List Cash',
+				'url' => '/cash',
 		],
 		[
 				'title' => 'Tambah Pemasukkan',
-				'url' => '/kas/pengeluaran',
+				'url' => '/cash/pengeluaran',
 		],
 		[
 				'title' => 'Tambah Pengeluaran',
-				'url' => '/kas/pemasukkan',
+				'url' => '/cash/pemasukkan',
 		],
 ]
 ];

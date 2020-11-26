@@ -1,18 +1,18 @@
 @extends('includes.dashboard')
 
-@section('title', 'Users')
+@section('title', 'Cash')
 
 @section('content')
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-6 col-sm-12">
 			<div class="title">
-				<h4>Users</h4>
+				<h4>Cash</h4>
 			</div>
 			<nav aria-label="breadcrumb" role="navigation">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Users</li>
+					<li class="breadcrumb-item active" aria-current="page">Cash</li>
 				</ol>
 			</nav>
 		</div>
@@ -49,31 +49,34 @@
 @endif
 <div class="card-box mb-30">
 	<div class="pd-20">
-		<h4 class="text-blue h4">All Users</h4>
-		<p class="mb-0">All users data on here</p>
+		<h4 class="text-blue h4">All Cashs</h4>
+		<p class="mb-0">All cashs data on here</p>
 	</div>
 	<div class="pb-20">
 		<table class="data-table table stripe hover nowrap">
 			<thead>
 				<tr>
 					<th class="table-plus datatable-nosort">No</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Role</th>
-					<th>Projects</th>
+					<th>Date</th>
+					<th>Category</th>
+					<th>Income</th>
+					<th>expense</th>
+					<th>From / To</th>
+					<th>Description</th>
 					<th style="width: 50px" class="datatable-nosort">Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				@php
-						$no = 1;
-				@endphp
-				@foreach ($users as $user)
+				@foreach ($cashs as $cash)
 						<tr>
-							<td>{{ $no++ }}</td>
-							<td>{{ $user->name }}</td>
-							<td>{{ $user->email }}</td>
-							<td>{{ $user->role }}</td>
+							<td>#</td>
+							<td>{{ $cash->date }}</td>
+							<td>{{ $cash->category_id }}</td>
+							<td>{{ $cash->income }}</td>
+							<td>{{ $cash->expense }}</td>
+							<td>{{ $cash->role }}</td>
+							<td>{{ $cash->subject }}</td>
+							<td>{{ $cash->description }}</td>
 							<td>
 								<a class="text-white badge badge-success"><i class="dw dw-rocket"></i> Active Project</a>
 								<a class="text-white badge badge-primary"><i class="dw dw-wall-clock2"></i> History Project</a>
@@ -85,17 +88,17 @@
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-										<a class="dropdown-item" href="{{ route('users.edit', $user->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+										<a class="dropdown-item" href="{{ route('cashs.edit', $cash->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 										<a
-                            href="{{ route('users.destroy', $user->id) }}"
-                            onclick="event.preventDefault(); document.getElementById('destroy-form{{ $user->id }}').submit();"
+                            href="{{ route('cashs.destroy', $cash->id) }}"
+                            onclick="event.preventDefault(); document.getElementById('destroy-form{{ $cash->id }}').submit();"
                             class="dropdown-item"
                         >
 												<i class="dw dw-delete-3"></i> Delete
                         </a>
                         <form
-                            id="destroy-form{{ $user->id }}"
-                            action="{{ route('users.destroy', $user->id) }}"
+                            id="destroy-form{{ $cash->id }}"
+                            action="{{ route('cashs.destroy', $cash->id) }}"
                             method="POST"
                             style="display: none;"
                         >

@@ -17,7 +17,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('projects.index');
+        $projects = Project::all();
+
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -52,8 +54,11 @@ class ProjectController extends Controller
                 'description' => 'required',
                 'client_id' => 'required|integer'
             ]);
-            
-            Project::create($request->all());
+
+            $project = Project::create($request->all());
+            $project->client_project()->create([
+                'client_id' => $request->client_id,
+            ]);
         } else{
             $request->validate([
                 'project_name' => 'required|max:255',
@@ -69,6 +74,7 @@ class ProjectController extends Controller
                 'cities_id' => 'required',
                 'districts_id' => 'required',
                 'villages_id' => 'required',
+                'address' => 'required',
             ]);
 
             $client = new Client;
@@ -81,23 +87,22 @@ class ProjectController extends Controller
             $client->cities_id = $request->cities_id;
             $client->districts_id = $request->districts_id;
             $client->villages_id = $request->villages_id;
+            $client->address = $request->address;
 
             $client->save();
 
-            $request->merge([
-                'client_id' => '$client->id'
+            // $request->merge([
+            //     'client_id' => '$client->id'
+            // ]);
+
+            $project = Project::create($request->all());
+
+            $client->client_project()->create([
+                'project_id' => $project->id
             ]);
-
-            $project = new Project();
-
-            $project->create($request->all());
         }
 
-        $client->client_project()->create([
-            'project_id' => $project->id,
-        ]);
-
-        return redirect()->route('projects.index');
+        return redirect('/projects');
 
     }
 
@@ -120,7 +125,12 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $project = Project::find($id);
+        $clients = Client::all();
+        $users = User::all();
+        $roles = Role::all();
+
+        return view('projects.edit', compact('users','roles','clients','project'));
     }
 
     /**
@@ -143,6 +153,8 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Project::find($id)->delete();
+
+        return redirect()->route('projects.index');
     }
 }

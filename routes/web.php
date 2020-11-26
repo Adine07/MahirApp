@@ -27,9 +27,12 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginProccess'])->name('login.proccess');
 Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::resource('/projects', ProjectController::class);
-Route::resource('/clients', ClientController::class);
-Route::resource('/kas', KasController::class);
-Route::resource('/users', UserController::class);
-Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+
+Route::middleware('auth')->group(function(){
+	Route::get('/home', [HomeController::class, 'index'])->name('home');
+	Route::resource('/projects', ProjectController::class);
+	Route::resource('/clients', ClientController::class);
+	Route::resource('/cash', KasController::class);
+	Route::resource('/users', UserController::class);
+	Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+});

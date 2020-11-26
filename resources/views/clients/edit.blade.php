@@ -1,19 +1,19 @@
 @extends('includes.dashboard')
 
-@section('title', 'User Create')
+@section('title', 'Edit Client')
 
 @section('content')
 <div class="page-header">
 	<div class="row">
 		<div class="col-md-6 col-sm-12">
 			<div class="title">
-				<h4>User Create</h4>
+				<h4>Edit Client</h4>
 			</div>
 			<nav aria-label="breadcrumb" role="navigation">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
-					<li class="breadcrumb-item active" aria-current="page">User Create</li>
+					<li class="breadcrumb-item"><a href="{{ route('clients.index') }}">Clients</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Edit Client</li>
 				</ol>
 			</nav>
 		</div>
@@ -21,8 +21,7 @@
 </div>
 <div class="card-box mb-30">
 	<div class="pd-20">
-		<h4 class="text-blue h4">Form Create User</h4>
-		<p class="mb-0">Input all user data</p>
+		<h4 class="text-blue h4">Form Edit Client</h4>
 	</div>
 	@if ($errors->any())
 			<div class="alert alert-danger">
@@ -33,21 +32,23 @@
 					</ul>
 			</div>
 	@endif
+	<form id="locations" action="{{ route('clients.update', $client->id) }}" method="post" enctype="multipart/form-data">
+	@csrf
+	@method('PUT')
 	<div class="pd-20">
-		<form id="locations" action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
-			@csrf
+		<h5 class="text-bold h5 pb-3">Data Client Form</h5>
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group row">
-						<label class="col-12 col-form-label">Name</label>
+						<label class="col-12 col-form-label">Client Name</label>
 						<div class="col-12">
-							<input class="form-control" name="name" value="{{ old('name') }}" type="text" placeholder="Johnny Brown">
+							<input class="form-control" name="client_name" value="{{ old('client_name', $client->client_name) }}" type="text" placeholder="Johnny Brown">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-12 col-form-label">Password</label>
+						<label class="col-12 col-form-label">Client Company Name</label>
 						<div class="col-12">
-							<input class="form-control" name="password" placeholder="password" type="password">
+							<input class="form-control" name="company_name" value="{{ old('company_name', $client->company_name) }}" placeholder="company_name" type="text">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -73,15 +74,15 @@
 
 				<div class="col-md-6">
 					<div class="form-group row">
-						<label class="col-12 col-form-label">Email</label>
+						<label class="col-12 col-form-label">Client Email</label>
 						<div class="col-12">
-							<input class="form-control" name="email" value="{{ old('email') }}" placeholder="example@example.com" type="email">
+							<input class="form-control" name="email" value="{{ old('email', $client->email) }}" placeholder="example@example.com" type="email">
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-12 col-form-label">WhatsApp</label>
+						<label class="col-12 col-form-label">Client WhatsApp</label>
 						<div class="col-12">
-							<input class="form-control" name="whatsapp" value="{{ old('whatsapp') }}" type="text" placeholder="0856*********">
+							<input class="form-control" name="whatsapp" value="{{ old('whatsapp', $client->whatsapp) }}" type="text" placeholder="0856*********">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -106,39 +107,28 @@
 			</div>
 			
 			<div class="form-group row">
-				<label class="col-12 col-form-label">Address</label>
+				<label class="col-12 col-form-label">Client Address</label>
 				<div class="col-12">
-					<textarea name="address" class="form-control border-radius-0" placeholder="Enter your address ...">{{ old('address') }}</textarea>
+					<textarea name="address" class="form-control border-radius-0" placeholder="Enter your address ...">{{ old('address', $client->address) }}</textarea>
 				</div>
 			</div>
-			<div class="form-group row">
-				<label class="col-12 col-form-label">User Role</label>
-				<div class="col-12">
-					<div class="d-inline-block custom-control custom-radio mb-5">
-						<input type="radio" id="customRadio1" value="manager" name="role" {{ old('role') == 'manager' ? 'selected' : '' }} class="custom-control-input">
-						<label class="custom-control-label" for="customRadio1">Manager</label>
-					</div>
-					<div class="d-inline-block custom-control custom-radio mb-5">
-						<input type="radio" id="customRadio2" value="employe" name="role" {{ old('role') == 'employe' ? 'selected' : '' }} class="custom-control-input">
-						<label class="custom-control-label" for="customRadio2">Employe</label>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="input-group mb-0">
-						<!--
-							use code for form submit
-							<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-						-->
-						<button class="btn btn-primary btn-lg btn-block">Submit</button>
-					</div>
-				</div>
-			</div>
-		</form>
 	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="input-group mb-0">
+				<!--
+					use code for form submit
+					<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+				-->
+				<button class="btn btn-primary btn-lg btn-block">Update</button>
+			</div>
+		</div>
+	</div>
+	</form>
 </div>
+
 @endsection
+
 @section('addon-script')
 <script src="/vendor/vue/vue.js"></script>
 <script src="https://unpkg.com/vue-toasted"></script>
@@ -148,16 +138,19 @@
 		el: "#locations",
 		mounted(){
 			this.getProvincesData();
+			this.getCitiesData();
+			this.getDistrictsData();
+			this.getVillagesData();
 		},
 		data: {
 			provinces:null,
 			cities:null,
 			districts:null,
 			villages:null,
-			provinces_id:null,
-			cities_id:null,
-			districts_id:null,
-			villages_id:null,
+			provinces_id:'{{ $client->provinces_id }}',
+			cities_id:'{{ $client->cities_id }}',
+			districts_id:'{{ $client->districts_id }}',
+			villages_id:'{{ $client->villages_id }}',
 		},
 		methods: {
 			getProvincesData(){
