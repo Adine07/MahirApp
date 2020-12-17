@@ -84,12 +84,12 @@
 										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
 										<a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 										<a
-                            href="{{ route('clients.destroy', $client->id) }}"
-                            onclick="event.preventDefault(); document.getElementById('destroy-form{{ $client->id }}').submit();"
-                            class="dropdown-item"
-                        >
-												<i class="dw dw-delete-3"></i> Delete
-                        </a>
+												href="{{ route('clients.destroy', $client->id) }}"
+												onclick="event.preventDefault(); document.getElementById('destroy-form{{ $client->id }}').submit();"
+												class="dropdown-item"
+										>
+										<i class="dw dw-delete-3"></i> Delete
+										</a>
                         <form
                             id="destroy-form{{ $client->id }}"
                             action="{{ route('clients.destroy', $client->id) }}"

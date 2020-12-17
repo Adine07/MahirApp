@@ -10,6 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,14 @@ Route::middleware('auth')->group(function(){
 	Route::get('/home', [HomeController::class, 'index'])->name('home');
 	Route::resource('/projects', ProjectController::class);
 	Route::resource('/clients', ClientController::class);
-	Route::resource('/cash', KasController::class);
+	Route::get('/cashs', [KasController::class, 'index'])->name('cashs.index');
+	Route::get('/cashs/income', [KasController::class, 'income'])->name('cashs.income');
+	Route::get('/cashs/expense', [KasController::class, 'expense'])->name('cashs.expense');
+	Route::post('/cashs', [KasController::class, 'store'])->name('cashs.store');
+	Route::get('/cashs/{id}/edit', [KasController::class, 'edit'])->name('cashs.edit');
+	Route::put('/cashs/{id}', [KasController::class, 'update'])->name('cashs.update');
+	Route::delete('/cashs/{id}', [KasController::class, 'destroy'])->name('cashs.destroy');
 	Route::resource('/users', UserController::class);
 	Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+	Route::resource('/schedules', ScheduleController::class);
 });

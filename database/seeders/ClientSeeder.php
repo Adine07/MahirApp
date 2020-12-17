@@ -32,7 +32,7 @@ class ClientSeeder extends Seeder
             'client_name' => 'Pak jono',
             'email' => 'jono@jono',
             'whatsapp' => '089688*******',
-            'company_name' => 'PT Maju Mundur',
+            'company_name' => 'PT Maju Terus',
             'provinces_id' => 33,
             'cities_id' => 3271,
             'districts_id' => 1607080,

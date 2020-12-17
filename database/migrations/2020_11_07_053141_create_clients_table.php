@@ -18,7 +18,7 @@ class CreateClientsTable extends Migration
             $table->string('client_name');
             $table->string('email');
             $table->string('whatsapp');
-            $table->string('company_name');
+            $table->string('company_name')->nullable();
             $table->foreignId('provinces_id');
             $table->foreignId('cities_id');
             $table->foreignId('districts_id');

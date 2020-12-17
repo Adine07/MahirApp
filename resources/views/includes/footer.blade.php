@@ -20,4 +20,3 @@
 <script src="/deskapp/src/plugins/datatables/js/vfs_fonts.js"></script>
 <!-- Datatable Setting js -->
 <script src="/deskapp/vendors/scripts/datatable-setting.js"></script></body>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>

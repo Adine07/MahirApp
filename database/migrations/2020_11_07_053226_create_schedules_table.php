@@ -16,7 +16,8 @@ class CreateSchedulesTable extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('time');
+            $table->enum('day', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
+            $table->string('time');
             $table->text('description');
             $table->softDeletes();
             $table->timestamps();

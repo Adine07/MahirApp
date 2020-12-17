@@ -17,6 +17,7 @@ class CreateClientProjectsTable extends Migration
             $table->id();
             $table->foreignId('client_id');
             $table->foreignId('project_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

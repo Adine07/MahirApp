@@ -39,15 +39,15 @@ $kas = [
 'childerns' => [
 		[
 				'title' => 'List Cash',
-				'url' => '/cash',
+				'url' => '/cashs',
 		],
 		[
-				'title' => 'Tambah Pemasukkan',
-				'url' => '/cash/pengeluaran',
+				'title' => 'Add Income',
+				'url' => '/cashs/income',
 		],
 		[
-				'title' => 'Tambah Pengeluaran',
-				'url' => '/cash/pemasukkan',
+				'title' => 'Add expense',
+				'url' => '/cashs/expense',
 		],
 ]
 ];
@@ -78,9 +78,19 @@ $reports = [
 
 $schedules = [
 'title' => 'Schedules',
-'url' => '/schedules',
+'url' => '',
 'icon' => 'dw dw-calendar1',
 'model' => App\Models\Schedule::class,
+'childerns' => [
+		[
+				'title' => 'List Schedule',
+				'url' => '/schedules',
+		],
+		[
+				'title' => 'Create Schedule',
+				'url' => '/schedules/create',
+		],
+]
 ];
 
 $menus = [$dashboard, $projects, $clients, $kas, $reports, $schedules, $users];

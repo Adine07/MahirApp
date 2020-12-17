@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Project;
+use App\Models\ProjectMember;
 
 class ProjectController extends Controller
 {
@@ -17,7 +18,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::orderBy('id', 'desc')->get();
 
         return view('projects.index', compact('projects'));
     }
@@ -31,9 +32,8 @@ class ProjectController extends Controller
     {
         $clients = Client::all();
         $users = User::all();
-        $roles = Role::all();
 
-        return view('projects.create', compact('users','roles','clients'));
+        return view('projects.create', compact('users','clients'));
     }
 
     /**
@@ -44,15 +44,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->is_client_old);
+        $request->merge(['status' => 'on-process']);
         if ($request->is_client_old === 'true') {
             $request->validate([
                 'project_name' => 'required|max:255',
                 'price' => 'required|max:255',
-                'start' => 'required',
-                'finish' => 'required',
                 'description' => 'required',
-                'client_id' => 'required|integer'
+                'client_id' => 'required|integer',
+                'user_id' => 'required',
+                'role' => 'required',
             ]);
 
             $project = Project::create($request->all());
@@ -63,11 +63,8 @@ class ProjectController extends Controller
             $request->validate([
                 'project_name' => 'required|max:255',
                 'price' => 'required|max:255',
-                'start' => 'required',
-                'finish' => 'required',
                 'description' => 'required',
                 'client_name' => 'required',
-                'company_name' => 'required',
                 'email' => 'required',
                 'whatsapp' => 'required',
                 'provinces_id' => 'required',
@@ -75,25 +72,11 @@ class ProjectController extends Controller
                 'districts_id' => 'required',
                 'villages_id' => 'required',
                 'address' => 'required',
+                'user_id' => 'required',
+                'role' => 'required',
             ]);
 
-            $client = new Client;
-
-            $client->client_name = $request->client_name;
-            $client->company_name = $request->company_name;
-            $client->email = $request->email;
-            $client->whatsapp = $request->whatsapp;
-            $client->provinces_id = $request->provinces_id;
-            $client->cities_id = $request->cities_id;
-            $client->districts_id = $request->districts_id;
-            $client->villages_id = $request->villages_id;
-            $client->address = $request->address;
-
-            $client->save();
-
-            // $request->merge([
-            //     'client_id' => '$client->id'
-            // ]);
+            $client = Client::create($request->all());
 
             $project = Project::create($request->all());
 
@@ -102,8 +85,24 @@ class ProjectController extends Controller
             ]);
         }
 
+        for ($i=0; $i < count($request->user_id) ; $i++) { 
+            $project->project_member()->create([
+                'user_id' => $request->user_id[$i],
+                'role' => $request->role[$i]
+            ]);
+        }
+
+
         return redirect('/projects');
 
+    }
+
+    public function payment(Request $request, $id)
+    {
+        $request->validate([
+            'project_id' => 'required',
+            'nominal' => 'required',
+        ]);
     }
 
     /**
@@ -128,9 +127,8 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $clients = Client::all();
         $users = User::all();
-        $roles = Role::all();
 
-        return view('projects.edit', compact('users','roles','clients','project'));
+        return view('projects.edit', compact('users','clients','project'));
     }
 
     /**
@@ -142,7 +140,30 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'project_name' => 'required|max:255',
+            'price' => 'required|max:255',
+            'start' => 'required',
+            'finish' => 'required',
+            'description' => 'required',
+            'client_id' => 'required|integer',
+            'user_id' => 'required',
+            'role' => 'required',
+        ]);
+
+        $project = Project::find($id);
+        $project->project_member()->delete();
+        $project->update($request->all());
+
+        for ($i=0; $i < count($request->user_id) ; $i++) { 
+            $project->project_member()->create([
+                'user_id' => $request->user_id[$i],
+                'role' => $request->role[$i]
+            ]);
+        }
+
+        return redirect()->route('projects.index');
+
     }
 
     /**

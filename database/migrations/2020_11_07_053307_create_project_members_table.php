@@ -17,7 +17,8 @@ class CreateProjectMembersTable extends Migration
             $table->id();
             $table->foreignId('project_id');
             $table->foreignId('user_id');
-            $table->foreignId('role_id');
+            $table->string('role');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

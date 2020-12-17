@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ClientProject;
 use Illuminate\Database\Seeder;
 
 class ClientProjectSeeder extends Seeder
@@ -13,6 +14,16 @@ class ClientProjectSeeder extends Seeder
      */
     public function run()
     {
-        //
+        ClientProject::truncate();
+
+        ClientProject::create([
+            'client_id' => 1,
+            'project_id' => 1,
+        ]);
+
+        ClientProject::create([
+            'client_id' => 2,
+            'project_id' => 2,
+        ]);
     }
 }

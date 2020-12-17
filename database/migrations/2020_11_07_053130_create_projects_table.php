@@ -16,9 +16,10 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('project_name');
+            $table->enum('status', ['on-process', 'on-progress', 'done', 'canceled']);
             $table->integer('price');
-            $table->date('start');
-            $table->date('finish');
+            $table->date('start')->nullable();
+            $table->date('finish')->nullable();
             $table->text('description');
             $table->softDeletes();
             $table->timestamps();

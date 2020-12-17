@@ -3,6 +3,8 @@
 use App\Http\Controllers\API\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\MemberController;
+use App\Http\Controllers\API\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +25,8 @@ Route::get('/provinces', [LocationController::class, 'provinces'])->name('api-pr
 Route::get('/cities/{provinces_id}', [LocationController::class, 'cities'])->name('api-cities');
 Route::get('/districts/{cities_id}', [LocationController::class, 'districts'])->name('api-districts');
 Route::get('/villages/{districts_id}', [LocationController::class, 'villages'])->name('api-villages');
+
+Route::get('/members/{id}', [MemberController::class, 'member'])->name('api-members');
+Route::get('/payments/{id}', [PaymentController::class, 'payment'])->name('api-payments');
+Route::get('/payments-cash/{id}', [PaymentController::class, 'paymentCash'])->name('api-payments-cash');
+Route::get('/fullpay/{id}', [PaymentController::class, 'fullpay'])->name('api-fullpay');

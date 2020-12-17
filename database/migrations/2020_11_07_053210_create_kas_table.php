@@ -15,8 +15,11 @@ class CreateKasTable extends Migration
     {
         Schema::create('kas', function (Blueprint $table) {
             $table->id();
+            $table->date('date');
             $table->foreignId('user_id');
-            $table->integer('nominal');
+            $table->foreignId('payment_id')->nullable();
+            $table->integer('income');
+            $table->integer('expense');
             $table->string('category');
             $table->string('subject');
             $table->text('description');

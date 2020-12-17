@@ -32,8 +32,9 @@
 					</ul>
 			</div>
 	@endif
-	<form id="locations" action="{{ route('projects.store') }}" method="post" enctype="multipart/form-data">
+	<form id="locations" action="{{ route('projects.update', $project->id) }}" method="post" enctype="multipart/form-data">
 	@csrf
+	@method('PUT')
 	<div class="pd-20">
 		<h5 class="text-bold h5 pb-3">Data Project Form</h5>
 			<div class="row">
@@ -93,15 +94,22 @@
 				</div>
 			</div>
 	</div>
-	<div class="pd-20" x-data="user()" x-init="() => { initSelect() }">
+	<div class="pd-20">
 		<h5 class="text-bold h5 pb-3">Member of project</h5>
-			<template x-for="(row, index) in rows" :key="row">
+		<div class="row">
+				<div class="col">
+						<div class="form-group">
+								<button class="btn btn-sm btn-success" type="button" v-on:click="addRows">Add</button>
+						</div>
+				</div>
+		</div>
+			<div v-for="(member, index) in members">
 				<div class="row">
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12 col-md-5">
 						<div class="form-group row">
 							<label class="col-sm-12 col-form-label">User Name</label>
 							<div class="col-12">
-								<select name="user_id[]" class="select custom-select" :class=" 'row' + index" x-model="row.user_id">
+								<select name="user_id[]" class="custom-select2 form-control" v-model="member.user_id">
 									@foreach ($users as $user)
 											<option value="{{ $user->id }}">{{ $user->name }}</option>
 									@endforeach
@@ -109,20 +117,24 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12 col-md-5">
 						<div class="form-group row">
 							<label class="col-12 col-form-label">User Role</label>
 							<div class="col-12">
-								<select name="role_id[]" class="select custom-select" :class=" 'row' + index" x-model="row.role_id">
-									@foreach ($roles as $role)
-											<option value="{{ $role->id }}">{{ $role->role }}</option>
-									@endforeach
-								</select>
+								<input type="text" name="role[]" class="form-control" v-model="member.role">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-2">
+						<div class="form-group row">
+							<label class="col-12 col-form-label">Remove</label>
+							<div class="col-12">
+								<button class="btn btn-sm btn-danger" type="button" v-on:click="removeRows(index)">remove</button>
 							</div>
 						</div>
 					</div>
 				</div>
-			</template>
+			</div>
 			<div class="row">
 				<div class="col-12">
 					<div class="input-group mb-0">
@@ -130,7 +142,7 @@
 							use code for form submit
 							<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
 						-->
-						<button class="btn btn-primary btn-lg btn-block">Update</button>
+						<button class="btn btn-primary btn-lg btn-block">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -139,7 +151,6 @@
 </div>
 
 @endsection
-
 @section('addon-script')
 <script src="/vendor/vue/vue.js"></script>
 <script src="https://unpkg.com/vue-toasted"></script>
@@ -148,64 +159,34 @@
 	var locations = new Vue({
 		el: "#locations",
 		mounted(){
-			this.getProvincesData();
+			this.getMembersData();
+			this.members = JSON.parse(this.$el.dataset.members)
 		},
 		data: {
 			is_client_old: true,
-			provinces:null,
-			cities:null,
-			districts:null,
-			villages:null,
-			provinces_id:null,
-			cities_id:null,
-			districts_id:null,
-			villages_id:null,
+			projectId: '{{ $project->id }}',
+			member: {
+				user_id: '',
+				role: '',
+			},
+			members: null,
 		},
 		methods: {
-			getProvincesData(){
+			getMembersData(){
 				var self = this;
-				axios.get("{{ route('api-provinces')}}").then(function(response){
-					self.provinces = response.data;
-				});
+				axios.get("{{ url('api/members') }}/" + self.projectId).then(function(response){
+					self.members = response.data.project_member;
+				})
 			},
-			getCitiesData(){
-				var self = this;
-				axios.get("{{ url('api/cities') }}/" + self.provinces_id).then(function(response){
-					self.cities = response.data;
-				});
+			addRows: function (){
+				this.members.push(Vue.util.extend({}, this.member))
 			},
-			getDistrictsData(){
-				var self = this;
-				axios.get("{{ url('api/districts') }}/" + self.cities_id).then(function(response){
-					self.districts = response.data;
-				});
-			},
-			getVillagesData(){
-				var self = this;
-				axios.get("{{ url('api/villages') }}/" + self.districts_id).then(function(response){
-					self.villages = response.data;
-				});
+			removeRows: function (index){
+				Vue.delete(this.members, index)
 			},
 		},
 		watch: {
-			provinces_id: function(val, oldVal){
-				this.cities_id = null;
-				this.getCitiesData();
-			},
-			cities_id: function(val, oldVal){
-				this.districts_id = null;
-				this.getDistrictsData();
-			},
-			districts_id: function(val, oldVal){
-				this.villages_id = null;
-				this.getVillagesData();
-			},
 		}
 	})
-</script>
-<script>
-	$(document).ready(function() {
-    $('.selectc').select2();
-	});
 </script>
 @endsection

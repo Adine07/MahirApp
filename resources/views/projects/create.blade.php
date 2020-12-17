@@ -47,7 +47,7 @@
 					<div class="form-group row">
 						<label class="col-12 col-form-label">Project Start</label>
 						<div class="col-12">
-							<input class="form-control" name="start" value="{{ old('start') }}" placeholder="Select Date" type="date">
+							<input class="form-control date-picker" name="start" value="{{ old('start') }}" placeholder="Select Date" type="text" data-date-format="yyyy-m-d" readonly style="background-color: white !important;">
 						</div>
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 					<div class="form-group row">
 						<label class="col-12 col-form-label">Project Finish</label>
 						<div class="col-12">
-							<input class="form-control" name="finish" value="{{ old('finish') }}" placeholder="Select Date" type="date">
+							<input class="form-control date-picker" name="finish" value="{{ old('finish') }}" placeholder="Select Date" type="text" data-date-format="yyyy-m-d" readonly style="background-color: white !important;">
 						</div>
 					</div>
 				</div>
@@ -119,7 +119,7 @@
 					<div class="form-group row" v-if="is_client_old">
 						<label class="col-12 col-form-label">Select Client</label>
 						<div class="col-12">
-							<select name="client_id" class="custom-select selectc">
+							<select name="client_id" class="custom-select2 form-control">
 								@foreach ($clients as $client)
 										<option value="{{ $client->id }}">{{ $client->client_name }}</option>
 								@endforeach
@@ -204,15 +204,22 @@
 				</div>
 			</div>
 	</div>
-	<div class="pd-20" x-data="user()" x-init="() => { initSelect() }">
+	<div class="pd-20">
 		<h5 class="text-bold h5 pb-3">Member of project</h5>
-			<template x-for="(row, index) in rows" :key="row">
+		<div class="row">
+				<div class="col">
+						<div class="form-group">
+								<button class="btn btn-sm btn-success" type="button" v-on:click="addRows">Add</button>
+						</div>
+				</div>
+		</div>
+			<div v-for="(member, index) in members">
 				<div class="row">
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12 col-md-5">
 						<div class="form-group row">
 							<label class="col-sm-12 col-form-label">User Name</label>
 							<div class="col-12">
-								<select name="user_id[]" class="select custom-select" :class=" 'row' + index" x-model="row.user_id">
+								<select name="user_id[]" class="custom-select2 form-control" v-model="member.user_id">
 									@foreach ($users as $user)
 											<option value="{{ $user->id }}">{{ $user->name }}</option>
 									@endforeach
@@ -220,20 +227,24 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12 col-md-5">
 						<div class="form-group row">
 							<label class="col-12 col-form-label">User Role</label>
 							<div class="col-12">
-								<select name="role_id[]" class="select custom-select" :class=" 'row' + index" x-model="row.role_id">
-									@foreach ($roles as $role)
-											<option value="{{ $role->id }}">{{ $role->role }}</option>
-									@endforeach
-								</select>
+								<input type="text" name="role[]" class="form-control" v-model="member.role">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-2">
+						<div class="form-group row">
+							<label class="col-12 col-form-label">Remove</label>
+							<div class="col-12">
+								<button class="btn btn-sm btn-danger" type="button" v-on:click="removeRows(index)">remove</button>
 							</div>
 						</div>
 					</div>
 				</div>
-			</template>
+			</div>
 			<div class="row">
 				<div class="col-12">
 					<div class="input-group mb-0">
@@ -260,6 +271,7 @@
 		el: "#locations",
 		mounted(){
 			this.getProvincesData();
+			this.members = JSON.parse(this.$el.dataset.members)
 		},
 		data: {
 			is_client_old: true,
@@ -271,6 +283,11 @@
 			cities_id:null,
 			districts_id:null,
 			villages_id:null,
+			member: {
+				user_id: '',
+				role: '',
+			},
+			members: [],
 		},
 		methods: {
 			getProvincesData(){
@@ -297,6 +314,12 @@
 					self.villages = response.data;
 				});
 			},
+			addRows: function (){
+				this.members.push(Vue.util.extend({}, this.member))
+			},
+			removeRows: function (index){
+				Vue.delete(this.members, index)
+			},
 		},
 		watch: {
 			provinces_id: function(val, oldVal){
@@ -313,10 +336,5 @@
 			},
 		}
 	})
-</script>
-<script>
-	$(document).ready(function() {
-    $('.selectc').select2();
-	});
 </script>
 @endsection

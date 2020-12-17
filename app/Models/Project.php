@@ -12,6 +12,7 @@ class Project extends Model
 
     protected $fillable = [
         'project_name',
+        'status',
         'price',
         'start',
         'finish',
@@ -32,5 +33,9 @@ class Project extends Model
 
     public function project_member(){
         return $this->hasMany(ProjectMember::class);
+    }
+
+    public function payment(){
+        return $this->hasMany(Payment::class);
     }
 }
