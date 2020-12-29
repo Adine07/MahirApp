@@ -39,5 +39,17 @@ class ProjectMemberSeeder extends Seeder
             'user_id' => 2,
             'role' => 'Full Stack Developer',
         ]);
+
+        ProjectMember::create([
+            'project_id' => 3,
+            'user_id' => 1,
+            'role' => 'Boss',
+        ]);
+
+        ProjectMember::create([
+            'project_id' => 3,
+            'user_id' => 2,
+            'role' => 'Full Stack Programmer',
+        ]);
     }
 }

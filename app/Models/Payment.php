@@ -12,7 +12,8 @@ class Payment extends Model
 
     protected $fillable = [
         'project_id',
-        'nominal'
+        'nominal',
+        'date',
     ];
 
     public function payment_detail(){
@@ -24,6 +25,6 @@ class Payment extends Model
     }
 
     public function project(){
-        return $this->hasOne(Project::class);
+        return $this->belongsTo(Project::class);
     }
 }

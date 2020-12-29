@@ -93,17 +93,17 @@ class ProjectController extends Controller
         }
 
 
-        return redirect('/projects');
+        return redirect('/projects')->with('status', 'Project created success fully!');
 
     }
 
-    public function payment(Request $request, $id)
-    {
-        $request->validate([
-            'project_id' => 'required',
-            'nominal' => 'required',
-        ]);
-    }
+    // public function payment(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'project_id' => 'required',
+    //         'nominal' => 'required',
+    //     ]);
+    // }
 
     /**
      * Display the specified resource.
@@ -113,7 +113,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Project::find($id);
+
+        return view('projects.show', compact('data'));
     }
 
     /**
@@ -162,7 +164,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')->with('update', 'Project update success fully!');
 
     }
 
@@ -176,6 +178,6 @@ class ProjectController extends Controller
     {
         Project::find($id)->delete();
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.index')->with('delete', 'Project deleted success fully!');
     }
 }

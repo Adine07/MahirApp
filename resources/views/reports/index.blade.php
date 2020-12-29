@@ -7,53 +7,24 @@
 	<div class="row">
 		<div class="col-md-6 col-sm-12">
 			<div class="title">
-				<h4>Users</h4>
+				<h4>Reports</h4>
 			</div>
 			<nav aria-label="breadcrumb" role="navigation">
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Users</li>
+					<li class="breadcrumb-item active" aria-current="page">Reports</li>
 				</ol>
 			</nav>
 		</div>
 	</div>
 </div>
-@if (session('status'))
-    <div class="alert alert-success alert-dismissible fade show">
-				{{ session('status') }}
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-    </div>
-@elseif(session('update'))
-    <div class="alert alert-info alert-dismissible fade show">
-				{{ session('update') }}
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-    </div>
-@elseif(session('delete'))
-    <div class="alert alert-danger alert-dismissible fade show">
-				{{ session('delete') }}
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-    </div>
-@elseif(session('cant'))
-    <div class="alert alert-warning alert-dismissible fade show">
-				{{ session('cant') }}
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-    </div>
-@endif
 <div class="card-box mb-30">
 	<div class="pd-20">
-		<h4 class="text-blue h4">Report Data</h4>
-		<p class="mb-0">All users data on here</p>
+		<h4 class="text-blue h4">All Report</h4>
+		<p class="mb-0">All report data on here</p>
 	</div>
 	<div class="pb-20">
-		<table class="data-table table stripe hover nowrap">
+		{{-- <table class="data-table table stripe hover nowrap">
 			<thead>
 				<tr>
 					<th class="table-plus datatable-nosort">No</th>
@@ -108,7 +79,7 @@
 						</tr>
 				@endforeach
 			</tbody>
-		</table>
+		</table> --}}
 	</div>
 </div>
 @endsection

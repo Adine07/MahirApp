@@ -37,7 +37,7 @@ class ClientController extends Controller
 
         Client::find($id)->update($request->all());
 
-        return redirect('/clients');
+        return redirect('/clients')->with('update', 'Client update success fully!');
     }
 
     public function destroy($id)

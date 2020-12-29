@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('project_id');
             $table->integer('nominal');
-            $table->date('date');
+            $table->string('date');
             $table->softDeletes();
             $table->timestamps();
         });

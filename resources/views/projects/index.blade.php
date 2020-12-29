@@ -93,104 +93,107 @@
 			}
 
 		</style>
+		<script type="text/javascript">      
+			window.csrf_token = "{{ csrf_token() }}"
+		</script>
 		<script src="/vendor/vue/vue.js"></script>
 		<script src="https://unpkg.com/vue-toasted"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		{{-- Modal member --}}
 		<script type="text/x-template" id="modalmem-template">
-      <transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container mem">
+			<transition name="modal">
+				<div class="modal-mask">
+				<div class="modal-wrapper">
+					<div class="modal-container mem">
 
-              <div class="modal-header">
-                <slot name="header">
-                  default header
-                </slot>
-              </div>
+					<div class="modal-header">
+						<slot name="header">
+						default header
+						</slot>
+					</div>
 
-              <div class="modal-body">
-                <slot name="body" class="body-m">
-									default body
-                </slot>
-              </div>
+					<div class="modal-body">
+						<slot name="body" class="body-m">
+											default body
+						</slot>
+					</div>
 
-              <div class="modal-footer">
-								<slot name="footer">
-								</slot>
-								<a class="text-white btn btn-success" @click="$emit('close')">
-									Close
-								</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
+					<div class="modal-footer">
+						<slot name="footer">
+						</slot>
+						<a class="text-white btn btn-success" @click="$emit('close')">
+							Close
+						</a>
+					</div>
+					</div>
+				</div>
+				</div>
+			</transition>
 		</script>
 		{{-- modal Payment --}}
 		<script type="text/x-template" id="modalpay-template">
-      <transition name="modal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-container pay">
+			<transition name="modal">
+				<div class="modal-mask">
+				<div class="modal-wrapper">
+					<div class="modal-container pay">
 
-              <div class="modal-header">
-                <slot name="header">
-                  default header
-                </slot>
-              </div>
+					<div class="modal-header">
+						<slot name="header">
+						default header
+						</slot>
+					</div>
 
-              <div class="modal-body">
-                <slot name="body" class="body-m">
-									default body
-                </slot>
-              </div>
+					<div class="modal-body">
+						<slot name="body" class="body-m">
+											default body
+						</slot>
+					</div>
 
-              <div class="modal-footer">
-								<slot name="footer1">
-								</slot>
-								<slot name="footer2">
-								</slot>
-								<a class="text-white btn btn-success" @click="$emit('close')">
-									Close
-								</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
+					<div class="modal-footer">
+						<slot name="footer1">
+						</slot>
+						<slot name="footer2">
+						</slot>
+						<a class="text-white btn btn-success" @click="$emit('close')">
+							Close
+						</a>
+					</div>
+					</div>
+				</div>
+				</div>
+			</transition>
 		</script>
 		{{-- Modal new payment --}}
 		<script type="text/x-template" id="modalnpm-template">
-      <transition name="modalnpm">
-        <div class="modal-mask mask-npm">
-          <div class="modal-wrapper">
-            <div class="modal-container npm">
+			<transition name="modalnpm">
+				<div class="modal-mask mask-npm">
+					<div class="modal-wrapper">
+						<div class="modal-container npm">
 
-              <div class="modal-header">
-                <slot name="header">
-                  default header
-                </slot>
-              </div>
+						<div class="modal-header">
+							<slot name="header">
+							default header
+							</slot>
+						</div>
 
-              <div class="modal-body">
-                <slot name="body" class="body-m">
-									default body
-                </slot>
-              </div>
+						<div class="modal-body">
+							<slot name="body" class="body-m">
+												default body
+							</slot>
+						</div>
 
-              <div class="modal-footer">
-								<slot name="footer">
-								</slot>
-								<a class="text-white btn btn-success" @click="$emit('close')">
-									Cencel
-								</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </transition>
-    </script>
+						<div class="modal-footer">
+							<slot name="footer">
+							</slot>
+							<a class="text-white btn btn-success" @click="$emit('close')">
+								Cencel
+							</a>
+						</div>
+						</div>
+					</div>
+				</div>
+			</transition>
+		</script>
 @endsection
 
 @section('content')
@@ -337,7 +340,7 @@
 										</tbody>
 									</table>
 									<p slot="footer1" class="mr-auto text-pay">Rp@{{ pay }} / Rp@{{ price }}</p>
-									<a v-if="pay < price" slot="footer2" class="text-white btn btn-success" id="show-modal" @click="projectIdm = {{ $project->id }}; showModalNewPayment = true">Add New Payment</a>
+									<a v-if="pay < price" slot="footer2" class="text-white btn btn-success" id="show-modal" @click="projectIdm = {{ $project->id }}; showModalNewPayment = true; form.bio = {{ Auth::user()->id }}">Add New Payment</a>
 								</modalpay>
 							</td>
 							<td>
@@ -346,7 +349,7 @@
 										<i class="dw dw-more"></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
+										<a class="dropdown-item" href="{{ route('projects.show', $project->id) }}"><i class="dw dw-eye"></i> View</a>
 										<a class="dropdown-item" href="{{ route('projects.edit', $project->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 										<a
                             href="{{ route('projects.destroy', $project->id) }}"
@@ -376,7 +379,7 @@
 					<div class="form-group row mx-0">
 						<label class="col-12 col-form-label" style="font-weight: bold">Income</label>
 						<div class="col-12">
-							<input class="form-control" name="income" v-model="income" placeholder="10000000" type="number" required>
+							<input class="form-control" name="income" v-model="form.income" placeholder="10000000" type="number" required>
 						</div>
 					</div>
 					<hr>
@@ -389,12 +392,18 @@
 						<div class="form-group row mx-0">
 							<label class="col-12 col-form-label">@{{ member.user.name }}</label>
 							<div class="col-12">
-								<input class="form-control" v-model="inpays.income" placeholder="10000000" type="number" required>
-								<input v-model="inpays.user_id" type="hidden" value="member.user.id">
+								<input class="form-control" v-bind:value="form.nominal[index]" v-on:input="pushId($event.target.value, member.user.id, index)" placeholder="10000000" type="number" required>
 							</div>
 						</div>
 					</template>
+					<div class="form-group row mx-0">
+						<label class="col-12 col-form-label">Cashs</label>
+						<div class="col-12">
+							<input type="number" class="form-control" v-model="form.cashs" placeholder="10000000" required>
+						</div>
+					</div>
 				</div>
+				<button slot="footer" class="btn btn-primary" @click="handleSubmit">Submit</button>
 			</modalnpm>
 		</table>
 	</div>
@@ -403,6 +412,10 @@
 
 @section('addon-script')
 <script>
+	axios.defaults.headers.common = {
+		'X-Requested-With': 'XMLHttpRequest',
+		'X-CSRF-TOKEN': window.csrf_token
+	};
 	// register modal component
 	Vue.component("modalmem", {
 		template: "#modalmem-template"
@@ -415,6 +428,16 @@
 	Vue.component("modalnpm", {
 		template: "#modalnpm-template"
 	});
+
+	const initForm = { bio: null, date: null, user_id: [], nominal: [], cashs: null, income: null, project_id: null, project_name: null }
+
+	var d = new Date();
+     
+    var date = d.getUTCDate();
+    var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
+    var year = d.getUTCFullYear();
+    
+    var dateStr = year + "-" + month + "-" + date;
 
 	// start app
 	new Vue({
@@ -431,7 +454,8 @@
 			members: null,
 			payments: null,
 			cash: null,
-			income: null,
+			num: 0,
+			form: { ...initForm },
 		},
 		methods: {
 			getMembersData(){
@@ -458,17 +482,36 @@
 					self.pay = response.data.payed;
 				})
 			},
+			pushId(value, id, index){
+				var self = this;
+				this.form.nominal[index] = value
+				this.form.user_id[index] = id
+				this.form.date = dateStr
+			},
+			handleSubmit () {
+				console.log(this.form)
+				axios.post('http://localhost:8000/api/payments/', this.form)
+					.then(() => {
+						this.form = { ...initForm }
+						this.showModalNewPayment = false
+						this.getPaymentsData()
+						this.getPaymentsCashData()
+						this.getPayCashData()
+					})
+			}
 		},
 		watch: {
 			projectIdm: function(val, oldVal){
 				this.getMembersData();
+				this.form.project_id = this.projectIdm;
+				this.form.project_name = this.payments.project_name;
 			},
 			projectIdp: function(val, oldVal){
 				this.getPaymentsData();
 				this.getPaymentsCashData();
 				this.getPayCashData();
 			},
-		}
+		},
 	});
 </script>
 @endsection

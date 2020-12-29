@@ -33,5 +33,14 @@ class ProjectSeeder extends Seeder
             'finish' => '2020-12-25',
             'description' => 'TukangQu, membangun web untuk keperluan Tukang dan keluarga',
         ]);
+
+        Project::create([
+            'project_name' => 'Website MU',
+            'status' => 'done',
+            'price' => '15000000',
+            'start' => '2020-10-2',
+            'finish' => '2020-11-5',
+            'description' => 'Website MU, membangun web untuk keperluan Tukang dan keluarga',
+        ]);
     }
 }

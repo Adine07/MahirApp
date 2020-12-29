@@ -90,5 +90,27 @@ class KasSeeder extends Seeder
             'subject' => 'Tukangku',
             'description' => 'bayar project tukangku termin ke 3',
         ]);
+
+        Kas::create([
+            'user_id' => 1,
+            'payment_id' => 6,
+            'date' => '2020-11-5',
+            'income' => 1000000,
+            'expense' => 0,
+            'category' => 'pembayaran',
+            'subject' => 'MU',
+            'description' => 'bayar project MU termin ke 2',
+        ]);
+
+        Kas::create([
+            'user_id' => 1,
+            'payment_id' => 7,
+            'date' => '2020-12-5',
+            'income' => 1000000,
+            'expense' => 0,
+            'category' => 'pembayaran',
+            'subject' => 'MU',
+            'description' => 'bayar project MU termin ke 3',
+        ]);
     }
 }

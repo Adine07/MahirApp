@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\UserApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,10 @@ Route::get('/villages/{districts_id}', [LocationController::class, 'villages'])-
 
 Route::get('/members/{id}', [MemberController::class, 'member'])->name('api-members');
 Route::get('/payments/{id}', [PaymentController::class, 'payment'])->name('api-payments');
+Route::post('/payments', [PaymentController::class, 'store'])->name('api-payments-store');
 Route::get('/payments-cash/{id}', [PaymentController::class, 'paymentCash'])->name('api-payments-cash');
 Route::get('/fullpay/{id}', [PaymentController::class, 'fullpay'])->name('api-fullpay');
+
+Route::get('/active/{id}', [UserApiController::class, 'active'])->name('active-project');
+Route::get('/history/{id}', [UserApiController::class, 'history'])->name('history-project');
+Route::get('/totin/{id}', [UserApiController::class, 'totin'])->name('totin-project');

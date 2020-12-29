@@ -36,7 +36,7 @@ class ScheduleController extends Controller
 
         Schedule::create($request->all());
 
-        return redirect()->route('schedules.index');
+        return redirect()->route('schedules.index')->with('status', 'Schedule create success fully!');
     }
 
     public function edit($id)
@@ -57,7 +57,7 @@ class ScheduleController extends Controller
 
         Schedule::find($id)->update($request->all());
 
-        return redirect()->route('schedules.index');
+        return redirect()->route('schedules.index')->with('update', 'Schedule update success fully!');
     }
 
     public function show($id)
@@ -65,5 +65,13 @@ class ScheduleController extends Controller
         $data = Schedule::find($id);
 
         return view('schedules.show', compact('data'));
+    }
+
+    public function destroy($id)
+    {
+        $schedule = Schedule::find($id);
+        $schedule->delete();
+
+        return redirect()->route('schedules.index')->with('delete', 'Schedule delete success fully!');
     }
 }

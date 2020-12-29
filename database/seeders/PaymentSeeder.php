@@ -46,5 +46,17 @@ class PaymentSeeder extends Seeder
             'nominal' => 8000000,
         ]);
 
+        Payment::create([
+            'project_id' => 3,
+            'date' => '2020-11-5',
+            'nominal' => 5000000,
+        ]);
+
+        Payment::create([
+            'project_id' => 3,
+            'date' => '2020-12-5',
+            'nominal' => 10000000,
+        ]);
+
     }
 }

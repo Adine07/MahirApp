@@ -76,5 +76,29 @@ class PaymentDetailSeeder extends Seeder
             'nominal' => 3500000,
         ]);
 
+        PaymentDetail::create([
+            'user_id' => 1,
+            'payment_id' => 6,
+            'nominal' => 2000000,
+        ]);
+
+        PaymentDetail::create([
+            'user_id' => 2,
+            'payment_id' => 6,
+            'nominal' => 2000000,
+        ]);
+
+        PaymentDetail::create([
+            'user_id' => 1,
+            'payment_id' => 7,
+            'nominal' => 4000000,
+        ]);
+
+        PaymentDetail::create([
+            'user_id' => 2,
+            'payment_id' => 7,
+            'nominal' => 5000000,
+        ]);
+
     }
 }

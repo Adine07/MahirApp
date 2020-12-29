@@ -45,7 +45,7 @@ class KasController extends Controller
 
         Kas::create($requset->all());
 
-        return redirect('/cashs');
+        return redirect('/cashs')->with('status', 'New data created success fully!');
     }
 
     public function edit($id)
@@ -68,13 +68,13 @@ class KasController extends Controller
 
         Kas::find($id)->update($requset->all());
 
-        return redirect('/cashs');
+        return redirect('/cashs')->with('update', 'data update success fully!');
     }
 
     public function destroy($id)
     {
         Kas::find($id)->delete();
 
-        return redirect()->route('cashs.index');
+        return redirect()->route('cashs.index')->with('delete', 'Data delete success fully!');
     }
 }
