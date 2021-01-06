@@ -234,7 +234,7 @@
 								<a class="text-white badge badge-success" @click="userIdAct = {{ $user->id }}; showModalActive{{ $user->id }} = true"><i class="dw dw-rocket"></i> Active Project</a>
 								<a class="text-white badge badge-primary" @click="userIdHtr = {{ $user->id }}; showModalHistory{{ $user->id }} = true"><i class="dw dw-wall-clock2"></i> History Project</a>
 
-								<modalact v-if="showModalActive{{ $user->id }}" @close="showModalActive{{ $user->id }} = false; userIdAct = null">
+								<modalact v-if="showModalActive{{ $user->id }}" @close="showModalActive{{ $user->id }} = false; userIdAct = null; PrjAct = null">
 									<!--
 								you can use custom content here to overwrite
 								default content
@@ -256,7 +256,7 @@
 									</table>
 								</modalact>
 
-								<modalact v-if="showModalHistory{{ $user->id }}" @close="showModalHistory{{ $user->id }} = false; userIdHtr = null">
+								<modalact v-if="showModalHistory{{ $user->id }}" @close="showModalHistory{{ $user->id }} = false; userIdHtr = null; PrjHtr = null">
 									<!--
 								you can use custom content here to overwrite
 								default content
@@ -270,9 +270,9 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr v-for="prj in PrjHtr">
-												<td>@{{ prj.project.project_name }}</td>
-												<td>@{{ prj.role }}</td>
+											<tr v-for="(prj, index) in PrjHtr">
+												<td>@{{ index }}</td>
+												<td>@{{ prj }}</td>
 											</tr>
 										</tbody>
 									</table>

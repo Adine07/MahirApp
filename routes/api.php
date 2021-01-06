@@ -35,4 +35,4 @@ Route::get('/fullpay/{id}', [PaymentController::class, 'fullpay'])->name('api-fu
 
 Route::get('/active/{id}', [UserApiController::class, 'active'])->name('active-project');
 Route::get('/history/{id}', [UserApiController::class, 'history'])->name('history-project');
-Route::get('/totin/{id}', [UserApiController::class, 'totin'])->name('totin-project');
+// Route::get('/totin/{idprj}/{idusr}', [UserApiController::class, 'totin'])->name('totin-project');
