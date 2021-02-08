@@ -14,17 +14,19 @@ class Payment extends Model
         'project_id',
         'nominal',
         'date',
+        'image',
+        'invoice'
     ];
 
     public function payment_detail(){
-        return $this->hasMany(PaymentDetail::class);
+        return $this->hasMany(PaymentDetail::class)->withTrashed();
     }
 
     public function cash(){
-        return $this->hasOne(Kas::class);
+        return $this->hasOne(Kas::class)->withTrashed();
     }
 
     public function project(){
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class)->withTrashed();
     }
 }

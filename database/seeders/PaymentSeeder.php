@@ -20,42 +20,56 @@ class PaymentSeeder extends Seeder
             'project_id' => 1,
             'date' => date("Y-m-d"),
             'nominal' => 15000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
         Payment::create([
             'project_id' => 1,
             'date' => '2020-11-21',
             'nominal' => 5000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
         Payment::create([
             'project_id' => 2,
             'date' => '2020-10-5',
             'nominal' => 10000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
         Payment::create([
             'project_id' => 2,
             'date' => '2020-11-5',
             'nominal' => 7000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
         Payment::create([
             'project_id' => 2,
             'date' => '2020-12-5',
             'nominal' => 8000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
         Payment::create([
             'project_id' => 3,
             'date' => '2020-11-5',
             'nominal' => 5000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
         Payment::create([
             'project_id' => 3,
             'date' => '2020-12-5',
             'nominal' => 10000000,
+            'image' => 'aaaa',
+            'invoice' => 'bbbb'
         ]);
 
     }

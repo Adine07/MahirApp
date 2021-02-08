@@ -11,6 +11,8 @@ use App\Http\Controllers\KasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,13 @@ Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function(){
 	Route::get('/home', [HomeController::class, 'index'])->name('home');
 	Route::resource('/projects', ProjectController::class);
+	Route::get('/projects/status/{id}/{status}', [ProjectController::class, 'status']);
+	Route::get('/projects/payment/{id}', [ProjectController::class, 'payment'])->name('projects.payment');
+	Route::get('/projects/payment/edit/{id}', [ProjectController::class, 'payment_edit'])->name('projects.payment.edit');
+	Route::post('/projects/payment/{id}', [ProjectController::class, 'payment_store'])->name('projects.payment.store');
+	Route::put('/projects/payment/{id}', [ProjectController::class, 'payment_update'])->name('projects.payment.update');
+	Route::delete('/projects/payment/{id}', [ProjectController::class, 'payment_delete'])->name('projects.payment.delete');
+	Route::resource('/role', RoleController::class);
 	Route::resource('/clients', ClientController::class);
 	Route::get('/cashs', [KasController::class, 'index'])->name('cashs.index');
 	Route::get('/cashs/income', [KasController::class, 'income'])->name('cashs.income');
@@ -40,6 +49,8 @@ Route::middleware('auth')->group(function(){
 	Route::get('/cashs/{id}/edit', [KasController::class, 'edit'])->name('cashs.edit');
 	Route::put('/cashs/{id}', [KasController::class, 'update'])->name('cashs.update');
 	Route::delete('/cashs/{id}', [KasController::class, 'destroy'])->name('cashs.destroy');
+	Route::get('/cashs/{id}', [KasController::class, 'show'])->name('cashs.show');
+	Route::resource('/category', CategoryController::class);
 	Route::resource('/users', UserController::class);
 	Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 	Route::resource('/schedules', ScheduleController::class);

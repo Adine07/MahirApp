@@ -20,84 +20,98 @@ class PaymentDetailSeeder extends Seeder
             'user_id' => 1,
             'payment_id' => 1,
             'nominal' => 5000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 1,
             'nominal' => 9000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 1,
             'payment_id' => 2,
             'nominal' => 2500000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 2,
             'nominal' => 2500000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 1,
             'payment_id' => 3,
             'nominal' => 4000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 3,
             'nominal' => 5000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 1,
             'payment_id' => 4,
             'nominal' => 2000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 4,
             'nominal' => 4000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 1,
             'payment_id' => 5,
             'nominal' => 3500000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 5,
             'nominal' => 3500000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 1,
             'payment_id' => 6,
             'nominal' => 2000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 6,
             'nominal' => 2000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 1,
             'payment_id' => 7,
             'nominal' => 4000000,
+            'image' => 'aaa'
         ]);
 
         PaymentDetail::create([
             'user_id' => 2,
             'payment_id' => 7,
             'nominal' => 5000000,
+            'image' => 'aaa'
         ]);
 
     }

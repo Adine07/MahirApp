@@ -26,5 +26,6 @@
 	</div>
 	@yield('addon-script')
 	@include('includes.footer')
+	@yield('script')
 </body>
 </html>

@@ -258,6 +258,9 @@
 					<th>Price</th>
 					<th>Member</th>
 					<th>Payment</th>
+					@if (Auth::user()->role == 'manager')
+					<th>Set Status to</th>
+					@endif
 					<th style="width: 50px" class="datatable-nosort">Action</th>
 				</tr>
 			</thead>
@@ -273,7 +276,7 @@
 							<td>{{ $project->finish }}</td>
 							<td>Rp{{ number_format($project->price) }}</td>
 							<td>
-								<a class="text-white btn btn-success btn-sm" id="show-modal" @click="projectIdm = {{ $project->id }}; showModalMember{{ $project->id }} = true"><i class="dw dw-rocket"></i> Members</a>
+								<a class="text-white badge badge-success badge-sm" id="show-modal" @click="projectIdm = {{ $project->id }}; showModalMember{{ $project->id }} = true"><i class="dw dw-rocket"></i> Members</a>
 								<!-- use the modal component, pass in the prop -->
 								{{-- Modal member --}}
 								<modalmem v-if="showModalMember{{ $project->id }}" @close="showModalMember{{ $project->id }} = false; members = null; projectIdm = null">
@@ -299,7 +302,7 @@
 								</modalmem>
 							</td>
 							<td>
-								<a class="text-white btn btn-success btn-sm" id="show-modal" @click="projectIdp = {{ $project->id }}; showModalPayment{{ $project->id }} = true; price = {{ $project->price }}"><i class="dw dw-rocket"></i> Payment</a>
+								<a class="text-white badge badge-success badge-sm" id="show-modal" @click="projectIdp = {{ $project->id }}; showModalPayment{{ $project->id }} = true; price = {{ $project->price }}"><i class="dw dw-rocket"></i> Payment</a>
 								<!-- use the modal component, pass in the prop -->
 								{{-- Modal member --}}
 								<modalpay v-if="showModalPayment{{ $project->id }}" @close="showModalPayment{{ $project->id }} = false; payments = null; projectIdp = null; cash = null; price = null; income = null">
@@ -340,9 +343,17 @@
 										</tbody>
 									</table>
 									<p slot="footer1" class="mr-auto text-pay">Rp@{{ pay }} / Rp@{{ price }}</p>
-									<a v-if="pay < price" slot="footer2" class="text-white btn btn-success" id="show-modal" @click="projectIdm = {{ $project->id }}; showModalNewPayment = true; form.bio = {{ Auth::user()->id }}">Add New Payment</a>
+									<a v-if="pay < price" slot="footer2" href="{{ route('projects.payment',$project->id) }}" class="text-white btn btn-success">Add New Payment</a>
 								</modalpay>
 							</td>
+							@if (Auth::user()->role == 'manager')
+							<td>
+								<a href="/projects/status/{{ $project->id }}/on-process" class="badge badge-warning badge-sm" style="{{ $project->status == 'on-process' ? 'display: none' : '' }}">On-proccess</a>
+								<a href="/projects/status/{{ $project->id }}/on-progress" class="badge badge-primary badge-sm" style="{{ $project->status == 'on-progress' ? 'display: none' : '' }}">On-progress</a>
+								<a href="/projects/status/{{ $project->id }}/done" class="badge badge-success badge-sm" style="{{ $project->status == 'done' ? 'display: none' : '' }}">Done</a>
+								<a href="/projects/status/{{ $project->id }}/canceled" class="badge badge-danger badge-sm" style="{{ $project->status == 'cenceled' ? 'display: none' : '' }}">Cancel</a>
+							</td>
+							@endif
 							<td>
 								<div class="dropdown">
 									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -350,23 +361,26 @@
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 										<a class="dropdown-item" href="{{ route('projects.show', $project->id) }}"><i class="dw dw-eye"></i> View</a>
+										{{-- <a class="dropdown-item" href="{{ route('projects.payment', $project->id) }}"><i class="dw dw-money-1"></i> Payment</a> --}}
+										@if (Auth::user()->role == 'manager')
 										<a class="dropdown-item" href="{{ route('projects.edit', $project->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 										<a
-                            href="{{ route('projects.destroy', $project->id) }}"
-                            onclick="event.preventDefault(); document.getElementById('destroy-form{{ $project->id }}').submit();"
-                            class="dropdown-item"
-                        >
-												<i class="dw dw-delete-3"></i> Delete
-                        </a>
-                        <form
-                            id="destroy-form{{ $project->id }}"
-                            action="{{ route('projects.destroy', $project->id) }}"
-                            method="POST"
-                            style="display: none;"
-                        >
-														@csrf
-														@method('DELETE')
-                        </form>
+											href="{{ route('projects.destroy', $project->id) }}"
+											onclick="event.preventDefault(); document.getElementById('destroy-form{{ $project->id }}').submit();"
+											class="dropdown-item"
+										>
+											<i class="dw dw-delete-3"></i> Delete
+										</a>
+										<form
+											id="destroy-form{{ $project->id }}"
+											action="{{ route('projects.destroy', $project->id) }}"
+											method="POST"
+											style="display: none;"
+										>
+											@csrf
+											@method('DELETE')
+										</form>
+										@endif
 									</div>
 								</div>
 							</td>
@@ -498,6 +512,7 @@
 						this.getPaymentsCashData()
 						this.getPayCashData()
 					})
+					.cath((err) => console.log(err.response))
 			}
 		},
 		watch: {

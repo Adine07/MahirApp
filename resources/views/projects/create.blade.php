@@ -219,7 +219,7 @@
 						<div class="form-group row">
 							<label class="col-sm-12 col-form-label">User Name</label>
 							<div class="col-12">
-								<select name="user_id[]" class="custom-select2 form-control" v-model="member.user_id">
+								<select name="user_id[]" class="custom-select form-control" v-model="member.user_id">
 									@foreach ($users as $user)
 											<option value="{{ $user->id }}">{{ $user->name }}</option>
 									@endforeach
@@ -231,7 +231,11 @@
 						<div class="form-group row">
 							<label class="col-12 col-form-label">User Role</label>
 							<div class="col-12">
-								<input type="text" name="role[]" class="form-control" v-model="member.role">
+								<select name="role[]" class="custom-select from-control" v-model="member.role">
+									@foreach ($role as $ro)
+										<option value="{{ $ro->name }}">{{ $ro->name }}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 					</div>

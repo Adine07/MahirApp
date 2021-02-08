@@ -1,6 +1,6 @@
 @extends('includes.dashboard')
 
-@section('title', 'Edit {{ $edit }}')
+@section('title', 'Edit')
 
 @php
 		if ($data->income == 0) {
@@ -52,7 +52,12 @@
 					<div class="form-group row">
 						<label class="col-12 col-form-label">Category</label>
 						<div class="col-12">
-							<input class="form-control" name="category" value="{{ old('category', $data->category) }}" type="text">
+							<select name="category" class="form-control custome-control2">
+								<option value="{{ $data->category }}">{{ $data->category }}</option>
+								@foreach ($category as $cat)
+									<option value="{{ $cat->name }}">{{ $cat->name }}</option>
+								@endforeach
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">

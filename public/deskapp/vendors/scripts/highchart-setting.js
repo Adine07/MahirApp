@@ -268,16 +268,16 @@ Highcharts.chart('chart5', {
 	series: [{
 		type: 'pie',
 		allowPointSelect: true,
-		keys: ['name', 'y', 'selected', 'sliced'],
+		keys: ['name', 'y'],
 		data: [
-		['Apples', 29.9, false],
-		['Pears', 71.5, false],
-		['Oranges', 106.4, false],
-		['Plums', 129.2, false],
-		['Bananas', 144.0, false],
-		['Peaches', 176.0, false],
-		['Prunes', 135.6, true, true],
-		['Avocados', 148.5, false]
+		['Apples', 29.9],
+		['Pears', 71.5],
+		['Oranges', 106.4],
+		['Plums', 129.2],
+		['Bananas', 144.0],
+		['Peaches', 176.0],
+		['Prunes', 135.6],
+		['Avocados', 148.5]
 		],
 		showInLegend: true
 	}]

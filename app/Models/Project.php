@@ -20,19 +20,19 @@ class Project extends Model
     ];
 
     public function client(){
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class)->withTrashed();
     }
 
     public function user(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTrashed();
     }
 
     public function client_project(){
-        return $this->hasMany(ClientProject::class);
+        return $this->hasOne(ClientProject::class)->withTrashed();
     }
 
     public function project_member(){
-        return $this->hasMany(ProjectMember::class);
+        return $this->hasMany(ProjectMember::class)->withTrashed();
     }
 
     public function payment(){

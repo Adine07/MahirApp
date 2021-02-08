@@ -1,101 +1,182 @@
 
 @php
-$dashboard = [
-'title' => 'Home',
-'url' => '/home',
-'icon' => 'dw dw-house-1',
-'model' => App\Models\Home::class,
-];
 
-$projects = [
-'title' => 'Project',
-'url' => '',
-'icon' => 'dw dw-startup',
-'model' => App\Models\Project::class,
-'childerns' => [
-		[
-				'title' => 'List Project',
-				'url' => '/projects',
-		],
-		[
-				'title' => 'Create Project',
-				'url' => '/projects/create',
-		],
-]
-];
+if (Auth::user()->role == 'manager') {
+	$dashboard = [
+	'title' => 'Home',
+	'url' => '/home',
+	'icon' => 'dw dw-house-1',
+	'model' => App\Models\Home::class,
+	];
+	
+	$projects = [
+	'title' => 'Project',
+	'url' => '',
+	'icon' => 'dw dw-startup',
+	'model' => App\Models\Project::class,
+	'childerns' => [
+			[
+					'title' => 'List Project',
+					'url' => '/projects',
+			],
+			[
+					'title' => 'Create Project',
+					'url' => '/projects/create',
+			],
+			[
+					'title' => 'CRUD Role',
+					'url' => '/role',
+			],
+	]
+	];
+	
+	$clients = [
+	'title' => 'Clients',
+	'url' => '/clients',
+	'icon' => 'dw dw-user-11',
+	'model' => App\Models\Client::class,
+	];
+	
+	$kas = [
+	'title' => 'Cash',
+	'url' => '',
+	'icon' => 'dw dw-money-1',
+	'model' => App\Models\Kas::class,
+	'childerns' => [
+			[
+					'title' => 'List Cash',
+					'url' => '/cashs',
+			],
+			[
+					'title' => 'Add Income',
+					'url' => '/cashs/income',
+			],
+			[
+					'title' => 'Add expense',
+					'url' => '/cashs/expense',
+			],
+			[
+					'title' => 'CRUD Category',
+					'url' => '/category',
+			],
+	]
+	];
+	
+	$users = [
+	'title' => 'Users',
+	'url' => '',
+	'icon' => 'dw dw-user1',
+	'model' => App\Models\User::class,
+	'childerns' => [
+			[
+					'title' => 'List Users',
+					'url' => '/users',
+			],
+			[
+					'title' => 'Create User',
+					'url' => '/users/create',
+			],
+	]
+	];
+	
+	$reports = [
+	'title' => 'Reports',
+	'url' => '/reports',
+	'icon' => 'dw dw-file-39',
+	'model' => App\Models\Report::class,
+	];
+	
+	$schedules = [
+	'title' => 'Schedules',
+	'url' => '',
+	'icon' => 'dw dw-calendar1',
+	'model' => App\Models\Schedule::class,
+	'childerns' => [
+			[
+					'title' => 'List Schedule',
+					'url' => '/schedules',
+			],
+			[
+					'title' => 'Create Schedule',
+					'url' => '/schedules/create',
+			],
+	]
+	];
+	
+	$menus = [
+		$dashboard, 
+		$projects, 
+		$clients, 
+		$kas, 
+		$reports, 
+		$schedules, 
+		$users
+	];
+	
+	$currentPath = '/' . request()->path();
+}else {
+	$dashboard = [
+	'title' => 'Home',
+	'url' => '/home',
+	'icon' => 'dw dw-house-1',
+	'model' => App\Models\Home::class,
+	];
+	
+	$projects = [
+	'title' => 'Project',
+	'url' => '/projects',
+	'icon' => 'dw dw-startup',
+	'model' => App\Models\Project::class,
+	];
+	
+	$clients = [
+	'title' => 'Clients',
+	'url' => '/clients',
+	'icon' => 'dw dw-user-11',
+	'model' => App\Models\Client::class,
+	];
+	
+	$kas = [
+	'title' => 'Cash',
+	'url' => '/cashs',
+	'icon' => 'dw dw-money-1',
+	'model' => App\Models\Kas::class,
+	];
+	
+	$users = [
+	'title' => 'Users',
+	'url' => '/users',
+	'icon' => 'dw dw-user1',
+	'model' => App\Models\User::class,
+	];
+	
+	$reports = [
+	'title' => 'Reports',
+	'url' => '/reports',
+	'icon' => 'dw dw-file-39',
+	'model' => App\Models\Report::class,
+	];
+	
+	$schedules = [
+	'title' => 'Schedules',
+	'url' => '/schedules',
+	'icon' => 'dw dw-calendar1',
+	'model' => App\Models\Schedule::class,
+	];
+	
+	$menus = [
+		$dashboard, 
+		$projects, 
+		$clients, 
+		$kas, 
+		$reports, 
+		$schedules, 
+		$users
+	];
+	
+	$currentPath = '/' . request()->path();
+}
 
-$clients = [
-'title' => 'Clients',
-'url' => '/clients',
-'icon' => 'dw dw-user-11',
-'model' => App\Models\Client::class,
-];
-
-$kas = [
-'title' => 'Cash',
-'url' => '',
-'icon' => 'dw dw-money-1',
-'model' => App\Models\Kas::class,
-'childerns' => [
-		[
-				'title' => 'List Cash',
-				'url' => '/cashs',
-		],
-		[
-				'title' => 'Add Income',
-				'url' => '/cashs/income',
-		],
-		[
-				'title' => 'Add expense',
-				'url' => '/cashs/expense',
-		],
-]
-];
-
-$users = [
-'title' => 'Users',
-'url' => '',
-'icon' => 'dw dw-user1',
-'model' => App\Models\User::class,
-'childerns' => [
-		[
-				'title' => 'List Users',
-				'url' => '/users',
-		],
-		[
-				'title' => 'Create User',
-				'url' => '/users/create',
-		],
-]
-];
-
-$reports = [
-'title' => 'Reports',
-'url' => '/reports',
-'icon' => 'dw dw-file-39',
-'model' => App\Models\Report::class,
-];
-
-$schedules = [
-'title' => 'Schedules',
-'url' => '',
-'icon' => 'dw dw-calendar1',
-'model' => App\Models\Schedule::class,
-'childerns' => [
-		[
-				'title' => 'List Schedule',
-				'url' => '/schedules',
-		],
-		[
-				'title' => 'Create Schedule',
-				'url' => '/schedules/create',
-		],
-]
-];
-
-$menus = [$dashboard, $projects, $clients, $kas, $reports, $schedules, $users];
-
-$currentPath = '/' . request()->path();
 
 @endphp
 

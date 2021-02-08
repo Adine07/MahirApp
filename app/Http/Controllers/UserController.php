@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Village;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+        $this->model = new User();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('only', $this->model);
         return view('users.create');
     }
 
@@ -38,6 +47,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('only', $this->model);
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|max:255',
@@ -69,7 +79,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = User::find($id);
+        $province = Province::find($data->provinces_id);
+        $city = City::find($data->cities_id);
+        $district = District::find($data->districts_id);
+        $village = Village::find($data->villages_id);
+
+        // dd($village);
+        $data->province = $province->name;
+        $data->city = $city->name;
+        $data->district = $district->name;
+        $data->village = $village->name;
+
+        return view('users.show', compact('data'));
     }
 
     /**
@@ -80,6 +102,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('only', $this->model);
         $user = User::find($id);
 
         return view('users.edit', compact('user'));
@@ -94,6 +117,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('only', $this->model);
         $user = User::find($id);
 
         $request->merge([
@@ -128,6 +152,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('only', $this->model);
         $user = User::find($id);
         $user->delete();
 

@@ -16,7 +16,7 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('client_name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('whatsapp');
             $table->string('company_name')->nullable();
             $table->foreignId('provinces_id');

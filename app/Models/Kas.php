@@ -11,4 +11,8 @@ class Kas extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['user_id','payment_id', 'category', 'income', 'expense', 'subject', 'date', 'description'];
+
+    public function user(){
+        return $this->belongsTo(User::class)->withTrashed();
+    }
 }

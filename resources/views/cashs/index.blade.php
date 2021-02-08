@@ -88,7 +88,7 @@
 										<i class="dw dw-more"></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
+										<a class="dropdown-item" href="{{ route('cashs.show', $cash->id) }}"><i class="dw dw-eye"></i> View</a>
 										<a class="dropdown-item" href="{{ route('cashs.edit', $cash->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 										<a
                             href="{{ route('cashs.destroy', $cash->id) }}"

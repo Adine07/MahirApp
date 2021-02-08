@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
+    function __construct()
+    {
+        $this->model = new Schedule();
+    }
     public function index()
     {
         $sundays = Schedule::where('day', 'Sunday')->orderBy('time')->get();
@@ -22,11 +26,13 @@ class ScheduleController extends Controller
 
     public function create()
     {
+        $this->authorize('only', $this->model);
         return view('schedules.create');
     }
 
     public function store(Request $request)
     {
+        $this->authorize('only', $this->model);
         $request->validate([
             'name' => 'required|string',
             'day' => 'required|string',
@@ -41,6 +47,7 @@ class ScheduleController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('only', $this->model);
         $data = Schedule::find($id);
 
         return view('schedules.edit', compact('data'));
@@ -48,6 +55,7 @@ class ScheduleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('only', $this->model);
         $request->validate([
             'name' => 'required|string',
             'day' => 'required|string',
@@ -69,6 +77,7 @@ class ScheduleController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('only', $this->model);
         $schedule = Schedule::find($id);
         $schedule->delete();
 

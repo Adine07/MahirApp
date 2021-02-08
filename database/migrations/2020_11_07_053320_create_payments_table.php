@@ -18,6 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->foreignId('project_id');
             $table->integer('nominal');
             $table->string('date');
+            $table->string('image');
+            $table->string('invoice');
             $table->softDeletes();
             $table->timestamps();
         });

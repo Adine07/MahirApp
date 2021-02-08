@@ -1,6 +1,6 @@
 @extends('includes.dashboard')
 
-@section('title', 'Schedule Edit')
+@section('title', 'Schedule')
 
 @section('content')
 <div class="page-header">

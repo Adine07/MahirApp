@@ -48,9 +48,16 @@
     </div>
 @endif
 <div class="card-box mb-30">
-	<div class="pd-20">
-		<h4 class="text-blue h4">All Clients</h4>
-		<p class="mb-0">All clients data on here</p>
+	<div class="pd-20 d-flex justify-content-between">
+		<div class="d-inline-block w-50">
+			<h4 class="text-blue h4">All Clients</h4>
+			<p class="mb-0">All clients data on here</p>
+		</div>
+		<div>
+			@if (Auth::user()->role == 'manager')
+				<a href="{{ route('clients.create') }}" class="btn btn-primary ml-auto mt-3">Create Client</a>
+			@endif
+		</div>
 	</div>
 	<div class="pb-20">
 		<table class="data-table table stripe hover nowrap">
@@ -81,24 +88,26 @@
 										<i class="dw dw-more"></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-										<a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}"><i class="dw dw-edit2"></i> Edit</a>
-										<a
-												href="{{ route('clients.destroy', $client->id) }}"
-												onclick="event.preventDefault(); document.getElementById('destroy-form{{ $client->id }}').submit();"
-												class="dropdown-item"
-										>
-										<i class="dw dw-delete-3"></i> Delete
-										</a>
-                        <form
-                            id="destroy-form{{ $client->id }}"
-                            action="{{ route('clients.destroy', $client->id) }}"
-                            method="POST"
-                            style="display: none;"
-                        >
-														@csrf
-														@method('DELETE')
-                        </form>
+										<a class="dropdown-item" href="{{ route('clients.show', $client->id) }}"><i class="dw dw-eye"></i> View</a>
+										@if (Auth::user()->role == 'manager')
+											<a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+											<a
+													href="{{ route('clients.destroy', $client->id) }}"
+													onclick="event.preventDefault(); document.getElementById('destroy-form{{ $client->id }}').submit();"
+													class="dropdown-item"
+											>
+											<i class="dw dw-delete-3"></i> Delete
+											</a>
+											<form
+												id="destroy-form{{ $client->id }}"
+												action="{{ route('clients.destroy', $client->id) }}"
+												method="POST"
+												style="display: none;"
+											>
+												@csrf
+												@method('DELETE')
+											</form>
+										@endif
 									</div>
 								</div>
 							</td>

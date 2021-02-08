@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Kas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class KasController extends Controller
 {
+    function __construct()
+    {
+        $this->model = new Kas();
+    }
+
     public function index()
     {
         $cashs = Kas::all();
@@ -20,16 +26,21 @@ class KasController extends Controller
 
     public function income()
     {
-        return view('cashs.income');
+        $this->authorize('only', $this->model);
+        $category = Category::all();
+        return view('cashs.income', compact('category'));
     }
 
     public function expense()
     {
-        return view('cashs.expense');
+        $this->authorize('only', $this->model);
+        $category = Category::all();
+        return view('cashs.expense', compact('category'));
     }
 
     public function store(Request $requset)
     {
+        $this->authorize('only', $this->model);
         $requset->validate([
             'category' => 'required',
             'subject' => 'required',
@@ -48,15 +59,27 @@ class KasController extends Controller
         return redirect('/cashs')->with('status', 'New data created success fully!');
     }
 
-    public function edit($id)
+    public function show($id)
     {
         $data = Kas::find($id);
 
-        return view('cashs.edit', compact('data'));
+        // dd($data);
+
+        return view('cashs.show', compact('data'));
+    }
+
+    public function edit($id)
+    {
+        $this->authorize('only', $this->model);
+        $data = Kas::find($id);
+        $category = Category::all();
+
+        return view('cashs.edit', compact('data', 'category'));
     }
 
     public function update(Request $requset, $id)
     {
+        $this->authorize('only', $this->model);
         $requset->validate([
             'category' => 'required',
             'subject' => 'required',
@@ -73,6 +96,7 @@ class KasController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('only', $this->model);
         Kas::find($id)->delete();
 
         return redirect()->route('cashs.index')->with('delete', 'Data delete success fully!');

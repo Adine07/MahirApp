@@ -17,27 +17,27 @@ class RoleSeeder extends Seeder
         Role::truncate();
 
         Role::create([
-            'role' => 'Marketing'
+            'name' => 'Marketing'
         ]);
 
         Role::create([
-            'role' => 'Senior Programmer'
+            'name' => 'Senior Programmer'
         ]);
 
         Role::create([
-            'role' => 'Programmer'
+            'name' => 'Programmer'
         ]);
 
         Role::create([
-            'role' => 'UI Designer'
+            'name' => 'UI Designer'
         ]);
 
         Role::create([
-            'role' => 'UX Research'
+            'name' => 'UX Research'
         ]);
 
         Role::create([
-            'role' => 'Full Stack Developer'
+            'name' => 'Full Stack Developer'
         ]);
     }
 }

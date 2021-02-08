@@ -25,5 +25,10 @@ class ClientProjectSeeder extends Seeder
             'client_id' => 2,
             'project_id' => 2,
         ]);
+
+        ClientProject::create([
+            'client_id' => 2,
+            'project_id' => 3,
+        ]);
     }
 }

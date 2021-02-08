@@ -18,6 +18,7 @@ class CreatePaymentDetailsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('payment_id');
             $table->integer('nominal');
+            $table->string('image');
             $table->softDeletes();
             $table->timestamps();
         });

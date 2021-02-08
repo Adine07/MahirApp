@@ -1,6 +1,6 @@
-@extends('includes.dashboard')
+@extends('includes.report')
 
-@section('title', 'Users')
+@section('title', 'Report')
 
 @section('content')
 <div class="page-header">
@@ -20,66 +20,130 @@
 </div>
 <div class="card-box mb-30">
 	<div class="pd-20">
-		<h4 class="text-blue h4">All Report</h4>
-		<p class="mb-0">All report data on here</p>
+		<div class="d-flex justify-content-between">
+			<div>
+				<h4 class="text-blue h4">All Report</h4>
+				<p class="mb-0">All report data on here</p>
+			</div>
+			<form action="{{ route('reports') }}" method="GET" id="yearForm" class="d-inline">	
+				<table>
+					<tr>
+						<td class="pr-1 h5">
+							Select Year
+						</td>
+						<td>
+							<select name="monthlyYear" id="" class="round" onchange="return $('#yearForm').submit()" style="padding: 5px 10px">
+								@php
+									$yearNow = date('Y', strtotime(now()));
+									$yearMin = date('Y', strtotime(App\Models\Kas::orderBy('date')->pluck('date')->first()));
+									
+								@endphp
+								@for ($i = $yearNow; $i >= $yearMin; $i--)
+									<option value="{{ $i }}" {{ $monthlyYear ? $monthlyYear == $i ? 'selected' : null : null }}>{{ $i }}</option>
+								@endfor
+							</select>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
 	</div>
-	<div class="pb-20">
-		{{-- <table class="data-table table stripe hover nowrap">
+	<div class="pd-20">
+		<span class="h5">Cash Mahir Teckhno In {{ $monthlyYear }}</span>
+		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<th class="table-plus datatable-nosort">No</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Role</th>
-					<th>Projects</th>
-					<th style="width: 50px" class="datatable-nosort">Action</th>
+					<th class="table-plus">Date</th>
+					<th>Income</th>
+					<th>Expense</th>
+					<th>Category</th>
+					<th>Subject</th>
+					<th>Description</th>
 				</tr>
 			</thead>
 			<tbody>
-				@php
-						$no = 1;
-				@endphp
-				@foreach ($users as $user)
-						<tr>
-							<td>{{ $no++ }}</td>
-							<td>{{ $user->name }}</td>
-							<td>{{ $user->email }}</td>
-							<td>{{ $user->role }}</td>
-							<td>
-								<a class="text-white badge badge-success"><i class="dw dw-rocket"></i> Active Project</a>
-								<a class="text-white badge badge-primary"><i class="dw dw-wall-clock2"></i> History Project</a>
-							</td>
-							<td>
-								<div class="dropdown">
-									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-										<i class="dw dw-more"></i>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-										<a class="dropdown-item" href="#"><i class="dw dw-eye"></i> View</a>
-										<a class="dropdown-item" href="{{ route('users.edit', $user->id) }}"><i class="dw dw-edit2"></i> Edit</a>
-										<a
-                            href="{{ route('users.destroy', $user->id) }}"
-                            onclick="event.preventDefault(); document.getElementById('destroy-form{{ $user->id }}').submit();"
-                            class="dropdown-item"
-                        >
-												<i class="dw dw-delete-3"></i> Delete
-                        </a>
-                        <form
-                            id="destroy-form{{ $user->id }}"
-                            action="{{ route('users.destroy', $user->id) }}"
-                            method="POST"
-                            style="display: none;"
-                        >
-														@csrf
-														@method('DELETE')
-                        </form>
-									</div>
-								</div>
-							</td>
-						</tr>
+				@foreach ($cashs as $cash)
+					<tr>
+						<td>{{ $cash->date }}</td>
+						<td>Rp{{ number_format($cash->income) }}</td>
+						<td>Rp{{ number_format($cash->expense) }}</td>
+						<td>{{ $cash->category }}</td>
+						<td>{{ $cash->subject }}</td>
+						<td>{{ $cash->description }}</td>
+					</tr>
 				@endforeach
 			</tbody>
-		</table> --}}
+			<tfoot>
+				<tr>
+					<th>Total Income</th>
+					<th>Rp{{ number_format($totin) }}</th>
+					<th>Total Expense</th>
+					<th>Rp{{ number_format($totex) }}</th>
+					<th>Total Cashs</th>
+					<th>Rp{{ number_format($totCashs) }}</th>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 </div>
+<div class="card-box mb-30">
+	<div class="pd-20">
+		<span class="h5">Project Entered in {{ $monthlyYear }}</span>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="table-plus">Project Name</th>
+					<th>client Name</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($projects as $project)
+					<tr>
+						<td>{{ $project->project_name }}</td>
+						<td>{{ $project->client_project->client->client_name }}</td>
+						<td>Rp{{ number_format($project->price) }}</td>
+					</tr>
+				@endforeach
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="2">Total Project</th>
+					<th>{{ $totproj }}</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+@endsection
+
+@section('script')
+	<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+	{{-- <script src=""></script> --}}
+	<script>
+		$(document).ready(function() {
+				$('.table').DataTable( {
+						dom: 'Bfrtip',
+						buttons: [
+							{
+								extend: 'excel',
+								messageTop: 'Cashs MahirTeckhno Agustus 2020',
+								// footer: true,
+							},
+							{
+								extend: 'pdf',
+								messageTop: 'Cashs MahirTeckhno Agustus 2020',
+								// footer: true,
+							},
+						]
+				} );
+		} );
+	</script>
 @endsection
