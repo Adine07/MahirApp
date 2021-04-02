@@ -107,7 +107,7 @@
 					</div>
 					<div class="form-group row">
 						<div class="col">
-							<button class="btn btn-primary">Submit</button>
+							<button class="btn btn-primary btn-block">Submit</button>
 						</div>
 					</div>
 				</form>

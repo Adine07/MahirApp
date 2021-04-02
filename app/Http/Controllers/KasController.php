@@ -16,7 +16,7 @@ class KasController extends Controller
 
     public function index()
     {
-        $cashs = Kas::all();
+        $cashs = Kas::orderByDesc('id')->get();
         $income = Kas::pluck('income')->sum();
         $expense = Kas::pluck('expense')->sum();
         $total = $income - $expense;

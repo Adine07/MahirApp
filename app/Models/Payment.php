@@ -19,7 +19,7 @@ class Payment extends Model
     ];
 
     public function payment_detail(){
-        return $this->hasMany(PaymentDetail::class)->withTrashed();
+        return $this->hasMany(PaymentDetail::class);
     }
 
     public function cash(){

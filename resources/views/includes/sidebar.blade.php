@@ -88,19 +88,9 @@ if (Auth::user()->role == 'manager') {
 	
 	$schedules = [
 	'title' => 'Schedules',
-	'url' => '',
+	'url' => '/schedules',
 	'icon' => 'dw dw-calendar1',
 	'model' => App\Models\Schedule::class,
-	'childerns' => [
-			[
-					'title' => 'List Schedule',
-					'url' => '/schedules',
-			],
-			[
-					'title' => 'Create Schedule',
-					'url' => '/schedules/create',
-			],
-	]
 	];
 	
 	$menus = [

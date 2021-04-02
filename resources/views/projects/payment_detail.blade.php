@@ -118,7 +118,7 @@
   </div>
   <div class="pd-20">
 		<div class="row">
-			<div class="col">
+			<div class="col-md-10">
 				<table class="w-100 mb-3">
 					<tr>
 						<td class="w-25">Payment</td>
@@ -126,6 +126,9 @@
 						<td>Rp {{ number_format($pay) }} / Rp {{ number_format($data->price) }}</td>
 					</tr>
 				</table>
+			</div>
+			<div class="col-md-2">
+				<a href="{{ route('projects.payment',$data->id) }}" class="text-white btn btn-success">New Payment</a>
 			</div>
 		</div>
     <div class="row">
@@ -167,29 +170,28 @@
               <td>
                 <a href="{{ route('projects.payment.edit', $payment->id) }}" class="btn btn-warning btn-sm btn-block mb-2 ">Edit</a>
                 <a
-									href="{{ route('projects.payment.delete', $payment->id) }}"
-									onclick="event.preventDefault(); document.getElementById('destroy-form{{ $payment->id }}').submit();"
-									class="btn btn-danger btn-sm btn-block"
-								>
-									Delete
-								</a>
-								<form
-									id="destroy-form{{ $payment->id }}"
-									action="{{ route('projects.payment.delete', $payment->id) }}"
-									method="POST"
-									style="display: none;"
-								>
-									@csrf
-									@method('DELETE')
-								</form>
-							</td>
+					href="{{ route('projects.payment.delete', $payment->id) }}"
+					onclick="event.preventDefault(); document.getElementById('destroy-form{{ $payment->id }}').submit();"
+					class="btn btn-danger btn-sm btn-block"
+				>
+					Delete
+				</a>
+				<form
+					id="destroy-form{{ $payment->id }}"
+					action="{{ route('projects.payment.delete', $payment->id) }}"
+					method="POST"
+					style="display: none;"
+				>
+					@csrf
+					@method('DELETE')
+				</form>
+			</td>
             </tr>
           @endforeach
         </table>
       </div>
 		</div>
 		<div class="pd-20">
-			<h4 class="text-blue h4">Set Status {{ $data->project_name }}</h4>
 			<p class="mb-0">Set Status to this project</p>
 		</div>
 		<div class="row">

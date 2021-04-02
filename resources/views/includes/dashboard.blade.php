@@ -20,7 +20,7 @@
 				@yield('content')
 			</div>
 			<div class="footer-wrap pd-20 mb-20 card-box">
-				MahirApp - Build with <i class="icon-copy ion-heart" style="color: salmon"></i> by <a style="color: salmon" href="https://www.instagram.com/adine_pamungkas" target="_blank">Adi Pamungkas</a>.
+				MahirApp - Build with <i class="icon-copy ion-heart" style="color: salmon"></i> by <span style="color: salmon">Anak Magang</span>.
 			</div>
 		</div>
 	</div>

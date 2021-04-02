@@ -48,9 +48,14 @@
     </div>
 @endif
 <div class="card-box mb-30">
-	<div class="pd-20">
-		<h4 class="text-blue h4">All Schedules</h4>
-		<p class="mb-0">All schedules data on here</p>
+	<div class="pd-20 d-flex justify-content-between">
+		<div>
+			<h4 class="text-blue h4">All Schedules</h4>
+			<p class="mb-0">All schedules data on here</p>
+		</div>
+		<div>
+			<a href="{{ route('schedules.create') }}" class="text-white btn btn-success">Add Schedule</a>
+		</div>
 	</div>
 	<div class="tab">
 		<ul class="nav nav-tabs customtab" role="tablist">

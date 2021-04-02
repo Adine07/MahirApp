@@ -113,6 +113,7 @@ class ProjectController extends Controller
 
     public function payment($id)
     {
+        $this->authorize('only', $this->model);
         $data = Project::with('project_member')->where('id', $id)->firstOrFail();
         // dd($data);
 
@@ -137,6 +138,7 @@ class ProjectController extends Controller
             'cash' => 'required',
             'img_payment' => 'required',
             'imgusr_payment' => 'required',
+            'invoice_ce' => 'required',
         ]);
 
         // dd($request);
@@ -350,7 +352,6 @@ class ProjectController extends Controller
             $request->merge([
                 'image' => $payment->image,
             ]);
-            // dd('else invoice');
         }
 
         if ($request->invoice_ce) {
@@ -383,7 +384,6 @@ class ProjectController extends Controller
 
         foreach ($payment->payment_detail as $i => $value) {
             $image[$request->user_id[$i]] = $value->image;
-            $this->removeFile($this->imgPath,$value->image);
         }
 
         $payment->payment_detail()->delete();
