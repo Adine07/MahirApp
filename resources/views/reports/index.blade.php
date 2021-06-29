@@ -25,7 +25,7 @@
 				<h4 class="text-blue h4">All Report</h4>
 				<p class="mb-0">All report data on here</p>
 			</div>
-			<form action="{{ route('reports') }}" method="GET" id="yearForm" class="d-inline">	
+			<form action="{{ route('reports') }}" method="GET" id="yearForm" class="d-inline">
 				<table>
 					<tr>
 						<td class="pr-1 h5">
@@ -36,7 +36,7 @@
 								@php
 									$yearNow = date('Y', strtotime(now()));
 									$yearMin = date('Y', strtotime(App\Models\Kas::orderBy('date')->pluck('date')->first()));
-									
+
 								@endphp
 								@for ($i = $yearNow; $i >= $yearMin; $i--)
 									<option value="{{ $i }}" {{ $monthlyYear ? $monthlyYear == $i ? 'selected' : null : null }}>{{ $i }}</option>
@@ -50,7 +50,7 @@
 	</div>
 	<div class="pd-20">
 		<span class="h5">Cash Mahir Teckhno In {{ $monthlyYear }}</span>
-		<table class="table table-bordered">
+		<table class="table table-cashs table-bordered">
 			<thead>
 				<tr>
 					<th class="table-plus">Date</th>
@@ -88,8 +88,8 @@
 </div>
 <div class="card-box mb-30">
 	<div class="pd-20">
-		<span class="h5">Project Entered in {{ $monthlyYear }}</span>
-		<table class="table table-bordered">
+		<span class="h5">Entered Project in {{ $monthlyYear }}</span>
+		<table class="table table-project table-bordered">
 			<thead>
 				<tr>
 					<th class="table-plus">Project Name</th>
@@ -129,17 +129,32 @@
 	{{-- <script src=""></script> --}}
 	<script>
 		$(document).ready(function() {
-				$('.table').DataTable( {
+				$('.table-cashs').DataTable( {
 						dom: 'Bfrtip',
 						buttons: [
 							{
 								extend: 'excel',
-								messageTop: 'Cashs MahirTeckhno Agustus 2020',
+								messageTop: 'Cashs MahirTeckhno' + ' ' + @php echo $monthlyYear @endphp,
 								// footer: true,
 							},
 							{
 								extend: 'pdf',
-								messageTop: 'Cashs MahirTeckhno Agustus 2020',
+								messageTop: 'Cashs MahirTeckhno' + ' ' + @php echo $monthlyYear @endphp,
+								// footer: true,
+							},
+						]
+				} );
+				$('.table-project').DataTable( {
+						dom: 'Bfrtip',
+						buttons: [
+							{
+								extend: 'excel',
+								messageTop: 'Entered Project MahirTeckhno' + ' ' + @php echo $monthlyYear @endphp,
+								// footer: true,
+							},
+							{
+								extend: 'pdf',
+								messageTop: 'Entered Project MahirTeckhno' + ' ' + @php echo $monthlyYear @endphp,
 								// footer: true,
 							},
 						]
