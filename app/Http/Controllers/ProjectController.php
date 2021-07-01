@@ -99,7 +99,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        for ($i=0; $i < count($request->user_id) ; $i++) { 
+        for ($i=0; $i < count($request->user_id) ; $i++) {
             $project->project_member()->create([
                 'user_id' => $request->user_id[$i],
                 'role' => $request->role[$i]
@@ -169,7 +169,7 @@ class ProjectController extends Controller
             'description' => $project->project_name,
         ]);
 
-        for ($i=0; $i < count($request->user_id) ; $i++) { 
+        for ($i=0; $i < count($request->user_id) ; $i++) {
             $request = $this->uploadImage($request, $request->file('imgusr_payment')[$i]);
             $payment->payment_detail()->create([
                 'user_id' => $request->user_id[$i],
@@ -179,7 +179,7 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('projects.index')->with('status', 'Project payment success fully!');
-        
+
     }
 
     /**
@@ -224,8 +224,9 @@ class ProjectController extends Controller
         $project = Project::find($id);
         $clients = Client::all();
         $users = User::all();
+        $role = Role::all();
 
-        return view('projects.edit', compact('users','clients','project'));
+        return view('projects.edit', compact('users','clients','project', 'role'));
     }
 
     /**
@@ -253,7 +254,7 @@ class ProjectController extends Controller
         $project->project_member()->delete();
         $project->update($request->all());
 
-        for ($i=0; $i < count($request->user_id) ; $i++) { 
+        for ($i=0; $i < count($request->user_id) ; $i++) {
             $project->project_member()->create([
                 'user_id' => $request->user_id[$i],
                 'role' => $request->role[$i]
@@ -342,7 +343,7 @@ class ProjectController extends Controller
         // dd($request);
 
         $payment = Payment::with('project', 'payment_detail')->where('id', $id)->firstOrFail();
-        
+
         $date = Carbon::now();
 
         if ($request->img_payment) {
@@ -372,7 +373,7 @@ class ProjectController extends Controller
             'image' => $request->image,
             'invoice' => $request->invoice,
         ]);
-        
+
         $payment->cash()->update([
             'user_id' => Auth::user()->id,
             'income' => $request->cash,
@@ -388,7 +389,7 @@ class ProjectController extends Controller
 
         $payment->payment_detail()->delete();
 
-        for ($i=0; $i < count($request->user_id) ; $i++) { 
+        for ($i=0; $i < count($request->user_id) ; $i++) {
 
             if (isset($request->imgusr_payment[$request->user_id[$i]])) {
                 $request = $this->uploadImage($request, $request->file('imgusr_payment')[$request->user_id[$i]]);

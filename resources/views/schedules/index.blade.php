@@ -2,6 +2,13 @@
 
 @section('title', 'Schedules')
 
+@section('addon-style')
+
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/sweetalert2/sweetalert2.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/responsive.bootstrap4.min.css">
+@endsection
+
 @section('content')
 <div class="page-header">
 	<div class="row">
@@ -54,7 +61,10 @@
 			<p class="mb-0">All schedules data on here</p>
 		</div>
 		<div>
+            @if (Auth::user()->role == 'manager')
+
 			<a href="{{ route('schedules.create') }}" class="text-white btn btn-success">Add Schedule</a>
+            @endif
 		</div>
 	</div>
 	<div class="tab">
@@ -103,14 +113,16 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $sunday->id) }}"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="{{ route('schedules.edit', $sunday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
-												<a
-																href="{{ route('schedules.destroy', $sunday->id) }}"
-																onclick="event.preventDefault(); document.getElementById('destroy-form{{ $sunday->id }}').submit();"
-																class="dropdown-item"
-														>
-														<i class="dw dw-delete-3"></i> Delete
-														</a>
+                                                @if (Auth::user()->role == 'manager')
+                                                    <a class="dropdown-item" href="{{ route('schedules.edit', $sunday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+                                                    <a
+                                                                    href="{{ route('schedules.destroy', $sunday->id) }}"
+                                                                    onclick="event.preventDefault(); document.getElementById('destroy-form{{ $sunday->id }}').submit();"
+                                                                    class="dropdown-item"
+                                                            >
+                                                            <i class="dw dw-delete-3"></i> Delete
+                                                            </a>
+                                                @endif
 														<form
 																id="destroy-form{{ $sunday->id }}"
 																action="{{ route('schedules.destroy', $sunday->id) }}"
@@ -149,14 +161,16 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $monday->id) }}"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="{{ route('schedules.edit', $monday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
-												<a
-																href="{{ route('schedules.destroy', $monday->id) }}"
-																onclick="event.preventDefault(); document.getElementById('destroy-form{{ $monday->id }}').submit();"
-																class="dropdown-item"
-														>
-														<i class="dw dw-delete-3"></i> Delete
-														</a>
+												@if (Auth::user()->role == 'manager')
+                                                    <a class="dropdown-item" href="{{ route('schedules.edit', $monday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+                                                    <a
+                                                                    href="{{ route('schedules.destroy', $monday->id) }}"
+                                                                    onclick="event.preventDefault(); document.getElementById('destroy-form{{ $monday->id }}').submit();"
+                                                                    class="dropdown-item"
+                                                            >
+                                                            <i class="dw dw-delete-3"></i> Delete
+                                                            </a>
+                                                @endif
 														<form
 																id="destroy-form{{ $monday->id }}"
 																action="{{ route('schedules.destroy', $monday->id) }}"
@@ -195,7 +209,8 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $tuesday->id) }}"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="{{ route('schedules.edit', $tuesday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+												@if (Auth::user()->role == 'manager')
+                                                <a class="dropdown-item" href="{{ route('schedules.edit', $tuesday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 												<a
 																href="{{ route('schedules.destroy', $tuesday->id) }}"
 																onclick="event.preventDefault(); document.getElementById('destroy-form{{ $tuesday->id }}').submit();"
@@ -203,6 +218,7 @@
 														>
 														<i class="dw dw-delete-3"></i> Delete
 														</a>
+                                                @endif
 														<form
 																id="destroy-form{{ $tuesday->id }}"
 																action="{{ route('schedules.destroy', $tuesday->id) }}"
@@ -241,7 +257,8 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $wednesday->id) }}"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="{{ route('schedules.edit', $wednesday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+												@if (Auth::user()->role == 'manager')
+                                                <a class="dropdown-item" href="{{ route('schedules.edit', $wednesday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 												<a
 																href="{{ route('schedules.destroy', $wednesday->id) }}"
 																onclick="event.preventDefault(); document.getElementById('destroy-form{{ $wednesday->id }}').submit();"
@@ -249,6 +266,7 @@
 														>
 														<i class="dw dw-delete-3"></i> Delete
 														</a>
+                                                @endif
 														<form
 																id="destroy-form{{ $wednesday->id }}"
 																action="{{ route('schedules.destroy', $wednesday->id) }}"
@@ -287,7 +305,8 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $thursday->id) }}"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="{{ route('schedules.edit', $thursday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+												@if (Auth::user()->role == 'manager')
+                                                <a class="dropdown-item" href="{{ route('schedules.edit', $thursday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 												<a
 																href="{{ route('schedules.destroy', $thursday->id) }}"
 																onclick="event.preventDefault(); document.getElementById('destroy-form{{ $thursday->id }}').submit();"
@@ -295,6 +314,7 @@
 														>
 														<i class="dw dw-delete-3"></i> Delete
 														</a>
+                                                @endif
 														<form
 																id="destroy-form{{ $thursday->id }}"
 																action="{{ route('schedules.destroy', $thursday->id) }}"
@@ -333,7 +353,8 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $friday->id) }}"><i class="dw dw-eye"></i> View</a>
-												<a class="dropdown-item" href="{{ route('schedules.edit', $friday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
+												@if (Auth::user()->role == 'manager')
+                                                <a class="dropdown-item" href="{{ route('schedules.edit', $friday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 												<a
 																href="{{ route('schedules.destroy', $friday->id) }}"
 																onclick="event.preventDefault(); document.getElementById('destroy-form{{ $friday->id }}').submit();"
@@ -341,6 +362,7 @@
 														>
 														<i class="dw dw-delete-3"></i> Delete
 														</a>
+                                                @endif
 														<form
 																id="destroy-form{{ $friday->id }}"
 																action="{{ route('schedules.destroy', $friday->id) }}"
@@ -379,6 +401,8 @@
 											</a>
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 												<a class="dropdown-item" href="{{ route('schedules.show', $saturday->id) }}"><i class="dw dw-eye"></i> View</a>
+                                                @if (Auth::user()->role == 'manager')
+
 												<a class="dropdown-item" href="{{ route('schedules.edit', $saturday->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 												<a
 																href="{{ route('schedules.destroy', $saturday->id) }}"
@@ -387,6 +411,7 @@
 														>
 														<i class="dw dw-delete-3"></i> Delete
 														</a>
+                                                @endif
 														<form
 																id="destroy-form{{ $saturday->id }}"
 																action="{{ route('schedules.destroy', $saturday->id) }}"
@@ -407,4 +432,12 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('script')
+
+<script src="/deskapp/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 @endsection

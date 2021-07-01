@@ -2,6 +2,13 @@
 
 @section('title', 'Cash')
 
+@section('addon-style')
+
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/sweetalert2/sweetalert2.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/responsive.bootstrap4.min.css">
+@endsection
+
 @section('content')
 <div class="page-header">
 	<div class="row">
@@ -89,6 +96,8 @@
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
 										<a class="dropdown-item" href="{{ route('cashs.show', $cash->id) }}"><i class="dw dw-eye"></i> View</a>
+                                        @if (Auth::user()->role == 'manager')
+
 										<a class="dropdown-item" href="{{ route('cashs.edit', $cash->id) }}"><i class="dw dw-edit2"></i> Edit</a>
 										<a
                             href="{{ route('cashs.destroy', $cash->id) }}"
@@ -97,6 +106,7 @@
                         >
 												<i class="dw dw-delete-3"></i> Delete
                         </a>
+                                        @endif
                         <form
                             id="destroy-form{{ $cash->id }}"
                             action="{{ route('cashs.destroy', $cash->id) }}"
@@ -115,4 +125,12 @@
 		</table>
 	</div>
 </div>
+@endsection
+
+@section('script')
+
+<script src="/deskapp/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 @endsection

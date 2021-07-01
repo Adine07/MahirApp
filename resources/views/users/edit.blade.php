@@ -105,11 +105,11 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="form-group row">
 				<label class="col-sm-12 col-md-1 col-form-label">Address</label>
 				<div class="col-sm-12 col-md-11">
-					<textarea name="address" class="textarea_editor form-control border-radius-0" placeholder="Enter your address ...">{{ old('address', $user->address) }}</textarea>
+					<textarea name="address" class="form-control border-radius-0" placeholder="Enter your address ...">{{ old('address', $user->address) }}</textarea>
 				</div>
 			</div>
 			<div class="form-group row">

@@ -2,6 +2,10 @@
 
 @section('title', 'Projects')
 @section('addon-style')
+
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/sweetalert2/sweetalert2.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/responsive.bootstrap4.min.css">
 		<style>
 			.modal-mask {
 				position: fixed;
@@ -93,7 +97,7 @@
 			}
 
 		</style>
-		<script type="text/javascript">      
+		<script type="text/javascript">
 			window.csrf_token = "{{ csrf_token() }}"
 		</script>
 		<script src="/vendor/vue/vue.js"></script>
@@ -258,9 +262,6 @@
 					<th>Price</th>
 					<th>Member</th>
 					<th>Payment</th>
-					@if (Auth::user()->role == 'manager')
-					<th>Set Status to</th>
-					@endif
 					<th style="width: 50px" class="datatable-nosort">Action</th>
 				</tr>
 			</thead>
@@ -343,17 +344,11 @@
 										</tbody>
 									</table>
 									<p slot="footer1" class="mr-auto text-pay">Rp@{{ pay }} / Rp@{{ price }}</p>
-									<a v-if="pay < price" slot="footer2" href="{{ route('projects.payment',$project->id) }}" class="text-white btn btn-success">Add New Payment</a>
+                                    @if (Auth::user()->role == 'manager')
+                                        <a v-if="pay < price" slot="footer2" href="{{ route('projects.payment',$project->id) }}" class="text-white btn btn-success">Add New Payment</a>
+                                    @endif
 								</modalpay>
 							</td>
-							@if (Auth::user()->role == 'manager')
-							<td>
-								<a href="/projects/status/{{ $project->id }}/on-process" class="badge badge-warning badge-sm" style="{{ $project->status == 'on-process' ? 'display: none' : '' }}">On-proccess</a>
-								<a href="/projects/status/{{ $project->id }}/on-progress" class="badge badge-primary badge-sm" style="{{ $project->status == 'on-progress' ? 'display: none' : '' }}">On-progress</a>
-								<a href="/projects/status/{{ $project->id }}/done" class="badge badge-success badge-sm" style="{{ $project->status == 'done' ? 'display: none' : '' }}">Done</a>
-								<a href="/projects/status/{{ $project->id }}/canceled" class="badge badge-danger badge-sm" style="{{ $project->status == 'cenceled' ? 'display: none' : '' }}">Cancel</a>
-							</td>
-							@endif
 							<td>
 								<div class="dropdown">
 									<a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
@@ -446,11 +441,11 @@
 	const initForm = { bio: null, date: null, user_id: [], nominal: [], cashs: null, income: null, project_id: null, project_name: null }
 
 	var d = new Date();
-     
+
     var date = d.getUTCDate();
     var month = d.getUTCMonth() + 1; // Since getUTCMonth() returns month from 0-11 not 1-12
     var year = d.getUTCFullYear();
-    
+
     var dateStr = year + "-" + month + "-" + date;
 
 	// start app
@@ -529,4 +524,12 @@
 		},
 	});
 </script>
+@endsection
+
+@section('script')
+
+<script src="/deskapp/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 @endsection

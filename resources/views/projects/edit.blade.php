@@ -69,7 +69,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="form-group row">
 				<label class="col-sm-12 col-form-label">Project Description</label>
 				<div class="col-sm-12">
@@ -117,11 +117,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-5">
+                    <div class="col-sm-12 col-md-5">
 						<div class="form-group row">
 							<label class="col-12 col-form-label">User Role</label>
 							<div class="col-12">
-								<input type="text" name="role[]" class="form-control" v-model="member.role">
+								<select name="role[]" class="custom-select from-control" v-model="member.role">
+									@foreach ($role as $ro)
+										<option value="{{ $ro->name }}">{{ $ro->name }}</option>
+									@endforeach
+								</select>
 							</div>
 						</div>
 					</div>

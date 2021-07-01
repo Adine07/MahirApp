@@ -8,7 +8,7 @@
 <style>
 	td {
 		vertical-align: text-top;
-		padding-top: 5px; 
+		padding-top: 5px;
 	}
 </style>
 @endsection
@@ -91,7 +91,7 @@
 					@endforeach
 					<div class="form-group row">
 						<div class="col-12">
-							<label>Cash</label>
+							<label>Company Cash</label>
 							<input type="number" name="cash" value="{{ $data->cash->income }}" class="form-control">
 						</div>
 					</div>

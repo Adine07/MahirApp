@@ -6,7 +6,7 @@
 <style>
 	td {
 		vertical-align: text-top;
-		padding-top: 5px; 
+		padding-top: 5px;
 	}
 
   .custab{
@@ -128,7 +128,9 @@
 				</table>
 			</div>
 			<div class="col-md-2">
-				<a href="{{ route('projects.payment',$data->id) }}" class="text-white btn btn-success">New Payment</a>
+                @if (Auth::user()->role == 'manager')
+                    <a href="{{ route('projects.payment',$data->id) }}" class="text-white btn btn-success">New Payment</a>
+                @endif
 			</div>
 		</div>
     <div class="row">
@@ -141,7 +143,9 @@
             <th class="custab">Payment Slip</th>
             <th class="custab">Invoice</th>
             <th class="custab">Allocation</th>
-            <th class="custab">Action</th>
+            @if (Auth::user()->role == 'manager')
+                <th class="custab">Action</th>
+            @endif
           </tr>
           @php
               $no = 1;
@@ -167,6 +171,8 @@
                   @endforeach
                 </table>
               </td>
+              @if (Auth::user()->role == 'manager')
+
               <td>
                 <a href="{{ route('projects.payment.edit', $payment->id) }}" class="btn btn-warning btn-sm btn-block mb-2 ">Edit</a>
                 <a
@@ -185,33 +191,36 @@
 					@csrf
 					@method('DELETE')
 				</form>
-			</td>
+			  </td>
+              @endif
             </tr>
           @endforeach
         </table>
       </div>
-		</div>
-		<div class="pd-20">
-			<p class="mb-0">Set Status to this project</p>
-		</div>
-		<div class="row">
-			<div class="col">
-				<div class="row">
-					<div class="col" style="{{ $data->status == 'on-process' ? 'display: none' : '' }}">
-						<a href="/projects/status/{{ $data->id }}/on-process" class="btn btn-warning btn-block">On-proccess</a>
-					</div>
-					<div class="col" style="{{ $data->status == 'on-progress' ? 'display: none' : '' }}">
-						<a href="/projects/status/{{ $data->id }}/on-progress" class="btn btn-primary btn-block">On-progress</a>
-					</div>
-					<div class="col" style="{{ $data->status == 'done' ? 'display: none' : '' }}">
-						<a href="/projects/status/{{ $data->id }}/done" class="btn btn-success btn-block">Done</a>
-					</div>
-					<div class="col" style="{{ $data->status == 'cenceled' ? 'display: none' : '' }}">
-						<a href="/projects/status/{{ $data->id }}/canceled" class="btn btn-danger btn-block">Cancel</a>
-					</div>
-				</div>
-			</div>
-		</div>
-  </div>
-</div>
+      @if (Auth::user()->role == 'manager')
+        </div>
+        <div class="pd-20">
+            <p class="mb-0">Set Status to this project</p>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col" style="{{ $data->status == 'on-process' ? 'display: none' : '' }}">
+                        <a href="/projects/status/{{ $data->id }}/on-process" class="btn btn-warning btn-block">On-proccess</a>
+                    </div>
+                    <div class="col" style="{{ $data->status == 'on-progress' ? 'display: none' : '' }}">
+                        <a href="/projects/status/{{ $data->id }}/on-progress" class="btn btn-primary btn-block">On-progress</a>
+                    </div>
+                    <div class="col" style="{{ $data->status == 'done' ? 'display: none' : '' }}">
+                        <a href="/projects/status/{{ $data->id }}/done" class="btn btn-success btn-block">Done</a>
+                    </div>
+                    <div class="col" style="{{ $data->status == 'cenceled' ? 'display: none' : '' }}">
+                        <a href="/projects/status/{{ $data->id }}/canceled" class="btn btn-danger btn-block">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+      @endif
+    </div>
 @endsection

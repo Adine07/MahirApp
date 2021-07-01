@@ -3,6 +3,9 @@
 @section('title', 'Users')
 
 @section('addon-style')
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/sweetalert2/sweetalert2.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="/deskapp/src/plugins/datatables/css/responsive.bootstrap4.min.css">
 		<style>
 			.modal-mask {
 				position: fixed;
@@ -313,6 +316,14 @@
 		</table>
 	</div>
 </div>
+@endsection
+
+@section('script')
+
+<script src="/deskapp/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
+<script src="/deskapp/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 @endsection
 
 @section('addon-script')
